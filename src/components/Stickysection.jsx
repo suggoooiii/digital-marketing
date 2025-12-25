@@ -8,6 +8,8 @@ const StickySection = ({
   offset = 0,
   bgColor = "bg-neutral-900",
   titleColor = "rgb(30, 30, 30)",
+  p1 = "",
+  p2 = "",
 }) => {
   const container = useRef(null);
 
@@ -65,8 +67,12 @@ const StickySection = ({
       </motion.div>
 
       <div class="flex flex-row gap-[7.5625rem] text-[#1E1E1E]">
-        <p class="flex text-[2rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0"></p>
-        <p class="block text-[1.125rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0"></p>
+        <p class="flex text-[2rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0">
+          {p1}
+        </p>
+        <p class="block text-[1.125rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0">
+          {p2}
+        </p>
       </div>
     </div>
   );

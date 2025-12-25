@@ -35,6 +35,8 @@ export default function App() {
             bgColor="bg-[#C3ABFF]"
             imgSrc="src/assets/img/1.png"
             title="Content Creation"
+            p1="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            p2="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
             The algorithm's workings are shrouded in complexity...
           </StickySection>
@@ -44,6 +46,8 @@ export default function App() {
             bgColor="bg-[#FED35B]"
             imgSrc="src/assets/img/2.png"
             title="SEO"
+            p1="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            p2="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
             The digital gospel etched into the very code...
           </StickySection>
@@ -53,6 +57,8 @@ export default function App() {
             bgColor="bg-[#FFFFFF]"
             imgSrc="src/assets/img/3.png"
             title="Advertisement"
+            p1="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            p2="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
             The elusive entities, lacking human form...
           </StickySection>
@@ -63,6 +69,8 @@ export default function App() {
             imgSrc="src/assets/img/5.png"
             title="Brand Strategy "
             // titleColor="white"
+            p1="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            p2="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
             This overlooked realm, a consequence of algorithmic judgments...
           </StickySection>
@@ -72,6 +80,8 @@ export default function App() {
             imgSrc="src/assets/img/4.png"
             title="Visual Identity"
             titleColor="white"
+            p1="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+            p2="lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
           >
             This overlooked realm, a consequence of algorithmic judgments...
           </StickySection>
