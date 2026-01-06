@@ -12,96 +12,97 @@ const getRandomDelay = () => Math.floor(Math.random() * (110 - 30 + 1)) + 30;
 
 export const TypeShuffle = ({ lines = [] }) => {
   const containerRef = useRef(null);
-  // Store refs to all character spans
-  //Structure: charRefs.current[lineIndex][charIndex]
   const charRefs = useRef([]);
+  // 1. Add a ref to track animation state
+  const isAnimating = useRef(false);
 
   const { contextSafe } = useGSAP({ scope: containerRef });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const triggerFx6 = useCallback(
     contextSafe(() => {
-      if (!charRefs.current.length) return;
+      // 2. Prevent triggering if already running
+      if (isAnimating.current || !charRefs.current.length) return;
+      isAnimating.current = true;
 
-      // Iterate through lines
+      // Count total characters to know when to finish
+      let completedChars = 0;
+      const totalChars = lines.join("").length;
+
       charRefs.current.forEach((lineChars, lineIndex) => {
-        // Stagger start time for the line: (lineIndex + 1) * 80ms
         const lineDelay = (lineIndex + 1) * 80;
 
-        // Start animation for each character in this line
         lineChars.forEach((charEl) => {
           if (!charEl) return;
 
-          // We use vanilla JS timeouts inside strictly for the "random loop" behavior
-          // because GSAP timelines are deterministic.
-          // We wrap it in a timeout to respect the line stagger.
           setTimeout(() => {
-            animateChar(charEl);
+            animateChar(charEl, () => {
+              // 3. Callback when a char finishes
+              completedChars++;
+              if (completedChars === totalChars) {
+                isAnimating.current = false;
+              }
+            });
           }, lineDelay);
         });
       });
     }),
-    []
+    [lines]
   );
 
-  const animateChar = (element) => {
+  const animateChar = (element, onComplete) => {
     const MAX_ITERATIONS = 15;
     const originalText = element.dataset.original;
-    const originalColor = element.dataset.color; // stored in dataset or just inherit
     let iteration = 0;
 
     const loop = () => {
-      // Finished? Restore state
       if (iteration === MAX_ITERATIONS - 1) {
         element.innerText = originalText;
-        element.style.color = ""; // Remove inline style to revert to CSS class color
+        element.style.color = "";
+        if (onComplete) onComplete(); // Notify completion
         return;
       }
 
-      // Glitch State
       element.innerText = getRandomChar();
       element.style.color = getRandomColor();
-
       iteration++;
 
-      // Re-loop with random delay
       if (iteration < MAX_ITERATIONS) {
         setTimeout(loop, getRandomDelay());
       }
     };
-
     loop();
   };
 
-  // Initialize refs array based on data
   useMemo(() => {
     charRefs.current = lines.map(() => []);
   }, [lines]);
 
   return (
-    <div ref={containerRef} className="font-mono text-xl cursor-default">
+    <div
+      ref={containerRef}
+      className="font-mono text-xl cursor-default"
+      onMouseEnter={triggerFx6}
+    >
       {lines.map((line, lineIndex) => (
-        <div key={lineIndex} className="block overflow-hidden">
+        <div
+          key={lineIndex}
+          className="block overflow-hidden pointer-events-none"
+        >
+          {" "}
+          {/* Optional: pointer-events-none on children ensures hover hits the parent smoothly */}
           {line.split("").map((char, charIndex) => (
             <span
               key={`${lineIndex}-${charIndex}`}
               ref={(el) => (charRefs.current[lineIndex][charIndex] = el)}
               data-original={char}
               className="inline-block whitespace-pre transition-colors"
-              style={{ willChange: "transform, opacity" }} // optimization
+              style={{ willChange: "transform, opacity" }}
             >
               {char}
             </span>
           ))}
         </div>
       ))}
-
-      <button
-        onClick={triggerFx6}
-        className="mt-8 px-4 py-2 border border-white/20 hover:bg-white/10 transition-colors text-sm rounded"
-      >
-        Trigger FX6
-      </button>
     </div>
   );
 };

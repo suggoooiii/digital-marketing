@@ -22,14 +22,10 @@ import { TypeShuffle } from "@components/TypeShuffle.jsx";
 
 export default function App() {
   return (
-    <main className="min-h-screen bg-black text-white p-20 flex flex-col items-center justify-center">
-      <TypeShuffle
-        lines={[
-          "Interaction Design",
-          "Frontend Development",
-          "Creative Coding",
-        ]}
-      />
+    <main className="min-h-screen bg-black text-white p-20 flex flex-col items-center justify-center gap-8">
+      <TypeShuffle lines={["Interaction"]} />
+      <TypeShuffle lines={["Design"]} />
+      <TypeShuffle lines={["Experiments"]} />
     </main>
   );
 }
