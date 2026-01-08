@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import HoverTitle from "@components/HoverTitle";
+import HoverTitle from "@components/effects/HoverTitle";
 import { motion } from "motion/react";
 import Header from "@components/Header";
-import Menu from "@components/Menu";
+import Menu from "@components/effects/Menu";
 import CenteredPixelTransition from "@components/pixelTransition/centered";
 
 export default function Home() {
