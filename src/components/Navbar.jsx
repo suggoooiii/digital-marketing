@@ -40,7 +40,7 @@ export default function Navbar({ active = "top", onJump }) {
                 ["Services", "services"],
                 ["Work", "work"],
                 ["Process", "process"],
-                ["Pricing", "pricing"],
+                ["Testimonials", "testimonials"],
               ].map(([label, id]) => (
                 <button
                   key={id}

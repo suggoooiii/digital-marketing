@@ -160,7 +160,7 @@ export default function Sections({ onJump }) {
             {splitToSpans("Process — predictable outcomes, weekly momentum")}
           </div>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-            A simple operating system for growth.
+            A simple operating system for growx th.
           </h2>
 
           <div className="mt-10 grid gap-5 md:grid-cols-4">
@@ -197,86 +197,54 @@ export default function Sections({ onJump }) {
         </div>
       </SectionShell>
 
-      {/* PRICING */}
-      <SectionShell id="pricing">
-        <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:p-12">
-          <div className="price-accent pointer-events-none absolute -left-32 top-1/2 h-56 w-56 -translate-y-1/2 rounded-full bg-white/10 blur-3xl" />
-
+      {/* TESTIMONIALS */}
+      <SectionShell id="testimonials">
+        <div className="rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl md:p-12">
           <div className="typo-line text-sm font-semibold text-white/70">
-            {splitToSpans("Pricing — clean packages, zero surprises")}
+            {splitToSpans("Testimonials — trusted by growth leaders")}
           </div>
           <h2 className="mt-4 text-3xl font-semibold tracking-tight md:text-4xl">
-            Pick your growth lane.
+            Don't just take our word for it.
           </h2>
-          <p className="mt-4 text-white/65">
-            Start lean, then scale into a full performance system once the
-            funnel proves itself.
-          </p>
 
-          <div className="mt-10 grid gap-5 md:grid-cols-3">
+          <div className="mt-10 grid gap-6 md:grid-cols-2">
             {[
               [
-                "Starter",
-                "£900/mo",
-                [
-                  "Audit + tracking",
-                  "Landing page tune-up",
-                  "Weekly sprint plan",
-                ],
+                "“Rewrote our entire acquisition playbook. We went from burning cash to profitable scale in 60 days.”",
+                "Alex R.",
+                "Founder, DTC Skin",
               ],
               [
-                "Growth",
-                "£1,800/mo",
-                [
-                  "Paid media management",
-                  "Creative testing loops",
-                  "Conversion optimisation",
-                ],
+                "“The most technical creative team we’ve worked with. Their landing pages actually convert.”",
+                "Sarah L.",
+                "CMO, FinTech Co.",
               ],
               [
-                "Scale",
-                "£3,200/mo",
-                [
-                  "Multi-channel scaling",
-                  "SEO + content engine",
-                  "Full funnel redesign",
-                ],
+                "“Finally, an agency that cares about CPA as much as we do. Reporting is clear, results are real.”",
+                "James T.",
+                "Head of Growth, SaaS",
               ],
-            ].map(([name, price, list]) => (
+              [
+                "“NoirGrowth is an extension of our team. Their speed of execution is unmatched.”",
+                "Emily K.",
+                "Director, E-com Brand",
+              ],
+            ].map(([quote, author, role], i) => (
               <div
-                key={name}
-                className={cx(
-                  "relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6",
-                  name === "Growth" && "ring-1 ring-white/20"
-                )}
+                key={i}
+                className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 p-6"
               >
-                <div className="absolute inset-0 opacity-0 transition-opacity duration-500 hover:opacity-100">
-                  <div className="absolute -left-24 top-0 h-full w-48 rotate-12 bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+                <div className="text-base leading-relaxed text-white/80">
+                  {quote}
                 </div>
-                <div className="relative">
-                  <div className="text-sm font-semibold text-white">{name}</div>
-                  <div className="mt-2 text-3xl font-semibold tracking-tight">
-                    {price}
+                <div className="mt-4 flex items-center gap-3">
+                  <div className="h-8 w-8 rounded-full bg-white/10" />
+                  <div>
+                    <div className="text-sm font-semibold text-white">
+                      {author}
+                    </div>
+                    <div className="text-xs text-white/50">{role}</div>
                   </div>
-                  <ul className="mt-5 space-y-2 text-sm text-white/65">
-                    {list.map((x) => (
-                      <li key={x} className="flex items-start gap-2">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-white/70" />
-                        <span>{x}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => onJump?.("contact")}
-                    className={cx(
-                      "mt-6 w-full rounded-xl px-4 py-2 text-sm font-semibold",
-                      name === "Growth"
-                        ? "bg-white text-black hover:opacity-90"
-                        : "border border-white/10 bg-white/5 text-white/85 hover:bg-white/10"
-                    )}
-                  >
-                    {name === "Growth" ? "Most Popular" : "Choose Plan"}
-                  </button>
                 </div>
               </div>
             ))}

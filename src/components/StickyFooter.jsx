@@ -11,8 +11,8 @@ export default function StickyFooter({ onJump }) {
 
           <div className="relative flex flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
             <div className="flex items-center gap-3">
-              <div className="h-2 w-2 rounded-full bg-white/70" />
-              <p className="text-xs text-white/70 md:text-sm">
+              <div className="h-2 w-2 rounded-full bg-white/70 animate-pulse" />
+              <p className="sticky-footer-text text-xs text-white/70 md:text-sm">
                 Ready to scale?{" "}
                 <span className="text-white">Get a free growth audit</span> in
                 48 hours.
@@ -21,10 +21,10 @@ export default function StickyFooter({ onJump }) {
 
             <div className="flex items-center gap-2">
               <button
-                onClick={() => onJump?.("pricing")}
+                onClick={() => onJump?.("testimonials")}
                 className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 hover:bg-white/10 md:text-sm"
               >
-                View Pricing
+                Testimonials
               </button>
               <button
                 onClick={() => onJump?.("contact")}
