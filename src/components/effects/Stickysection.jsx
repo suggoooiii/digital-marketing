@@ -67,7 +67,7 @@ const StickySection = ({
       </motion.div>
 
       <div class="flex flex-row gap-[7.5625rem] text-[#1E1E1E]">
-        <p class="flex text-[2rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0">
+        <p class="flex text-[2rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-10">
           {p1}
         </p>
         <p class="block text-[1.125rem] font-normal leading-[1.2] text-[#1E1E1E] m-0 p-0">
