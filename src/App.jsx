@@ -103,22 +103,6 @@ export default function App() {
       <Intro />
       <Services />
       <Section />
-      {/* <div className="relative w-full">
-        {stickySections.map((section) => (
-          <StickySection
-            key={section.id}
-            offset={section.offset}
-            bgColor={section.bgColor}
-            imgSrc={section.imgSrc}
-            title={section.title}
-            titleColor={section.titleColor}
-            p1={section.p1}
-            p2={section.p2}
-          >
-            {section.children}
-          </StickySection>
-        ))}
-      </div> */}
       <div className="h-screen flex items-center justify-center text-white"></div>
       <StickyFooter height={800} />
     </main>
