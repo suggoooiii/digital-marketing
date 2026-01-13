@@ -3,10 +3,11 @@ import gsap from "gsap";
 import LocomotiveScroll from "locomotive-scroll";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
+import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 
 export default function StickyFooter({
   height = 800,
-  backgroundColor = "#4E4E5A",
+  backgroundColor = "#2a1a4a",
   children,
 }) {
   const containerRef = useRef(null);
@@ -85,17 +86,31 @@ export default function StickyFooter({
 
 // Default Footer Content Component
 
-function FooterContent({ backgroundColor = "#4E4E5A" }) {
+function FooterContent({ backgroundColor = "#2a1a4a" }) {
   return (
     <motion.div
-      className="flex h-full w-full flex-col justify-between px-12 py-8"
+      className="relative flex h-full w-full flex-col justify-between overflow-hidden px-12 py-8"
       style={{ backgroundColor }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       transition={{ duration: 0.6 }}
     >
-      <FooterNav />
-      <FooterHero />
+      {/* Dotted Glow Background */}
+      <DottedGlowBackground
+        className="absolute inset-0 z-0"
+        gap={20}
+        radius={1.5}
+        color="rgba(255,255,255,0.1)"
+        glowColor="rgba(73, 0, 244, 0.8)"
+        opacity={1}
+        speedMin={0.3}
+        speedMax={12}
+      />
+      {/* Content */}
+      <div className="relative z-10 flex h-full flex-col justify-between">
+        <FooterNav />
+        <FooterHero />
+      </div>
     </motion.div>
   );
 }
@@ -149,12 +164,12 @@ function FooterHero() {
       transition={{ duration: 0.6, delay: 0.2 }}
     >
       <motion.h1
-        className="mt-10 text-[14vw] leading-[0.8] text-white"
+        className="mt-10 text-[10vw] leading-[0.8] text-white"
         initial={{ scale: 0.9 }}
         whileInView={{ scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        Sticky Footer
+        Marketing Agency
       </motion.h1>
       <p className="text-white/60">©copyright</p>
     </motion.div>

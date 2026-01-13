@@ -25,7 +25,7 @@ const BoltIcon = () => (
   </svg>
 );
 
-export default function Navbar({ active = "top", onJump }) {
+export default function Navbar({ active = "top", onJump, onContactOpen }) {
   const [openDropdown, setOpenDropdown] = useState(null);
 
   const navItems = [
@@ -118,17 +118,13 @@ export default function Navbar({ active = "top", onJump }) {
           </nav>
 
           {/* CTA Button */}
-          <a
-            href="#contact"
-            onClick={(e) => {
-              e.preventDefault();
-              onJump?.("contact");
-            }}
+          <button
+            onClick={() => onContactOpen?.()}
             className="flex items-center gap-2 rounded-full bg-[#4900f4] px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-[#5a1fff] hover:shadow-[0_0_20px_rgba(73,0,244,0.4)]"
           >
             <BoltIcon />
-            Get Access
-          </a>
+            Connect with us
+          </button>
         </div>
       </div>
     </div>

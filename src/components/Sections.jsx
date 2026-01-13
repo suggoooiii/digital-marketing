@@ -1,6 +1,7 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 import laptop3 from "/src/assets/img/laptop2.jpg";
+import swirling from "/src/assets/swirlingObj.gif";
 
 export default function Section() {
   const container = useRef();
@@ -28,9 +29,9 @@ export default function Section() {
       <div className="fixed top-[-10vh] left-0 h-[120vh] w-full">
         <motion.div style={{ y }} className="relative w-full h-full">
           <img
-            src={laptop3}
+            src={swirling}
             alt="image"
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: "scale-down" }}
             className="absolute inset-0 w-full h-full object-cover"
           />
         </motion.div>

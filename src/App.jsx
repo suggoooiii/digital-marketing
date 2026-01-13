@@ -1,17 +1,19 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Lenis from "lenis";
 import Intro from "@components/Intro";
 import Services from "@components/Services";
 import Section from "@components/Sections";
 import Navbar from "@components/Navbar";
+import ContactModal from "@components/ContactModal";
+import FloatingContactButton from "@components/FloatingContactButton";
 import DettedGlowBackground from "@components/DettedGlowBackground";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
-import StickySection from "@components/effects/Stickysection";
 import StickyFooter from "@components/StickyFooter";
 import LocomotiveScroll from "locomotive-scroll";
 
 export default function App() {
   const scrollRef = useRef(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // useEffect(() => {
   //   const lenis = new Lenis();
@@ -92,11 +94,16 @@ export default function App() {
 
   return (
     <main ref={scrollRef}>
-      <Navbar />
+      <Navbar onContactOpen={() => setIsContactOpen(true)} />
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+      />
+      <FloatingContactButton onClick={() => setIsContactOpen(true)} />
       <Intro />
       <Services />
       <Section />
-      <div className="relative w-full">
+      {/* <div className="relative w-full">
         {stickySections.map((section) => (
           <StickySection
             key={section.id}
@@ -111,11 +118,9 @@ export default function App() {
             {section.children}
           </StickySection>
         ))}
-      </div>
-      <StickyFooter height={800} backgroundColor="#4E4E5A" />
-      {/* <div className="h-screen flex items-center justify-center text-white">
-        <p className="text-2xl">End of the journey.</p>
       </div> */}
+      <div className="h-screen flex items-center justify-center text-white"></div>
+      <StickyFooter height={800} />
     </main>
   );
 }
