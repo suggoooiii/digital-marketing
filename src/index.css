@@ -4,8 +4,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand-dark: #0f0518;
-  --color-brand-purple: #4c1d95;
+  /* --color-brand-dark: #0f0518; */
+  /* --color-brand-purple: #4c1d95; */
   --font-sans: "Inter", system-ui, sans-serif;
 }
 
