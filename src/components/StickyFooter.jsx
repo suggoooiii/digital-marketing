@@ -1,41 +1,162 @@
-import React from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import LocomotiveScroll from "locomotive-scroll";
+import { useEffect, useRef } from "react";
+import { motion } from "framer-motion";
 
-export default function StickyFooter({ onJump }) {
+export default function StickyFooter({
+  height = 800,
+  backgroundColor = "#4E4E5A",
+  children,
+}) {
+  const containerRef = useRef(null);
+  const footerRef = useRef(null);
+  const locomotiveScrollRef = useRef(null);
+
+  // Initialize Locomotive Scroll
+  useEffect(() => {
+    locomotiveScrollRef.current = new LocomotiveScroll();
+
+    return () => {
+      locomotiveScrollRef.current?.destroy();
+    };
+  }, []);
+
+  // GSAP animations using @gsap/react hook
+  useGSAP(
+    () => {
+      if (!footerRef.current) return;
+
+      // Animate footer content on scroll
+      gsap.fromTo(
+        footerRef.current.querySelectorAll(".footer-animate"),
+        {
+          y: 50,
+          opacity: 0,
+        },
+        {
+          y: 0,
+          opacity: 1,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: containerRef.current,
+            start: "top bottom",
+            end: "top center",
+            scrub: 1,
+          },
+        }
+      );
+    },
+    { scope: containerRef }
+  );
+
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-40 px-4 pb-4">
-      <div className="mx-auto max-w-6xl">
-        <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl">
-          <div className="absolute inset-0 opacity-40">
-            <div className="absolute -left-40 top-1/2 h-24 w-[520px] -translate-y-1/2 rotate-6 bg-gradient-to-r from-transparent via-white/15 to-transparent" />
-          </div>
-
-          <div className="relative flex flex-col gap-3 px-4 py-3 md:flex-row md:items-center md:justify-between md:px-6">
-            <div className="flex items-center gap-3">
-              <div className="h-2 w-2 rounded-full bg-white/70 animate-pulse" />
-              <p className="sticky-footer-text text-xs text-white/70 md:text-sm">
-                Ready to scale?{" "}
-                <span className="text-white">Get a free growth audit</span> in
-                48 hours.
-              </p>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <button
-                onClick={() => onJump?.("testimonials")}
-                className="rounded-xl border border-white/10 bg-white/5 px-3 py-2 text-xs text-white/80 hover:bg-white/10 md:text-sm"
-              >
-                Testimonials
-              </button>
-              <button
-                onClick={() => onJump?.("contact")}
-                className="rounded-xl bg-white px-3 py-2 text-xs font-semibold text-black hover:opacity-90 md:text-sm"
-              >
-                Claim Audit
-              </button>
-            </div>
-          </div>
+    <div
+      ref={containerRef}
+      className="relative"
+      style={{
+        height: `${height}px`,
+        clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
+      }}
+    >
+      <div
+        className="relative"
+        style={{
+          height: `calc(100vh + ${height}px)`,
+          top: "-100vh",
+        }}
+      >
+        <div
+          ref={footerRef}
+          className="sticky w-full"
+          style={{
+            height: `${height}px`,
+            top: `calc(100vh - ${height}px)`,
+          }}
+        >
+          {children || <FooterContent backgroundColor={backgroundColor} />}
         </div>
       </div>
     </div>
+  );
+}
+
+// Default Footer Content Component
+
+function FooterContent({ backgroundColor = "#4E4E5A" }) {
+  return (
+    <motion.div
+      className="flex h-full w-full flex-col justify-between px-12 py-8"
+      style={{ backgroundColor }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.6 }}
+    >
+      <FooterNav />
+      <FooterHero />
+    </motion.div>
+  );
+}
+
+function FooterNav() {
+  const navSections = [
+    {
+      title: "About",
+      links: ["Home", "Projects", "Our Mission", "Contact Us"],
+    },
+    {
+      title: "Education",
+      links: ["News", "Learn", "Certification", "Publications"],
+    },
+  ];
+
+  return (
+    <motion.div
+      className="footer-animate flex shrink-0 gap-20"
+      initial={{ y: 30, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, staggerChildren: 0.1 }}
+    >
+      {navSections.map((section) => (
+        <div key={section.title} className="flex flex-col gap-2">
+          <h3 className="mb-2 text-sm uppercase text-white/50">
+            {section.title}
+          </h3>
+          {section.links.map((link) => (
+            <motion.p
+              key={link}
+              className="cursor-pointer text-white transition-colors hover:text-white/80"
+              whileHover={{ x: 5 }}
+              transition={{ type: "spring", stiffness: 300 }}
+            >
+              {link}
+            </motion.p>
+          ))}
+        </div>
+      ))}
+    </motion.div>
+  );
+}
+
+function FooterHero() {
+  return (
+    <motion.div
+      className="footer-animate flex items-end justify-between"
+      initial={{ y: 50, opacity: 0 }}
+      whileInView={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.6, delay: 0.2 }}
+    >
+      <motion.h1
+        className="mt-10 text-[14vw] leading-[0.8] text-white"
+        initial={{ scale: 0.9 }}
+        whileInView={{ scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+      >
+        Sticky Footer
+      </motion.h1>
+      <p className="text-white/60">©copyright</p>
+    </motion.div>
   );
 }

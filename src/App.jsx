@@ -7,15 +7,27 @@ import Navbar from "@components/Navbar";
 import DettedGlowBackground from "@components/DettedGlowBackground";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 import StickySection from "@components/effects/Stickysection";
+import StickyFooter from "@components/StickyFooter";
+import LocomotiveScroll from "locomotive-scroll";
 
 export default function App() {
+  const scrollRef = useRef(null);
+
+  // useEffect(() => {
+  //   const lenis = new Lenis();
+  //   function raf(time) {
+  //     lenis.raf(time);
+  //     requestAnimationFrame(raf);
+  //   }
+  //   requestAnimationFrame(raf);
+  // }, []);
+
   useEffect(() => {
-    const lenis = new Lenis();
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    const locomotiveScroll = new LocomotiveScroll();
+
+    return () => {
+      locomotiveScroll.destroy();
+    };
   }, []);
 
   const stickySections = [
@@ -79,7 +91,7 @@ export default function App() {
   ];
 
   return (
-    <main>
+    <main ref={scrollRef}>
       <Navbar />
       <Intro />
       <Services />
@@ -100,10 +112,10 @@ export default function App() {
           </StickySection>
         ))}
       </div>
-      {/* Outro Section */}
-      <div className="h-screen flex items-center justify-center text-white">
+      <StickyFooter height={800} backgroundColor="#4E4E5A" />
+      {/* <div className="h-screen flex items-center justify-center text-white">
         <p className="text-2xl">End of the journey.</p>
-      </div>
+      </div> */}
     </main>
   );
 }
