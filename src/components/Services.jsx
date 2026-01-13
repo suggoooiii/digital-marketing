@@ -1,36 +1,171 @@
-import { useScroll, useTransform, motion, useSpring } from "framer-motion";
-import { useRef } from "react";
-import { DottedGlowBackground } from "./ui/dotted-glow-background";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  useSpring,
+  useInView,
+} from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+
+// Animated text component - types out characters one by one
+const TypewriterText = ({ text, className, delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+  const [displayedText, setDisplayedText] = useState("");
+
+  useEffect(() => {
+    if (isInView) {
+      let currentIndex = 0;
+      const timeout = setTimeout(() => {
+        const interval = setInterval(() => {
+          if (currentIndex <= text.length) {
+            setDisplayedText(text.slice(0, currentIndex));
+            currentIndex++;
+          } else {
+            clearInterval(interval);
+          }
+        }, 50); // Speed of typing (ms per character)
+
+        return () => clearInterval(interval);
+      }, delay);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isInView, text, delay]);
+
+  return (
+    <h2 ref={ref} className={className}>
+      {displayedText}
+      <span className="animate-pulse">|</span>
+    </h2>
+  );
+};
 
 const services = [
   {
     id: 1,
-    title: "Social media ads",
+    title: "Social Media Ads",
+    subtitle: "Targeted Campaigns",
     content:
-      "Advertising campaigns across social media platforms such as Facebook, Instagram, YouTube, and TikTok. Our specialized team develops customized strategies to increase engagement and reach, enhancing your campaign results and achieving your marketing goals.",
+      "Advertising campaigns across social media platforms such as Facebook, Instagram, YouTube, and TikTok. Our specialized team develops customized strategies to increase engagement and reach.",
+    image: "/images/social-ads.jpg",
+    accent: "#4900f4",
   },
   {
     id: 2,
-    title: "Photography and design",
+    title: "Photography & Design",
+    subtitle: "Visual Identity",
     content:
-      "We offer innovative photography and design services that reflect your brand identity and target your audience in a distinctive way, whether it's visual content, professional photos, or high-quality creative designs.",
+      "We offer innovative photography and design services that reflect your brand identity and target your audience in a distinctive way, whether it's visual content or high-quality creative designs.",
+    image: "/images/photography.jpg",
+    accent: "#f400a1",
   },
   {
     id: 3,
-    title: "Social media management",
+    title: "Social Media Management",
+    subtitle: "Brand Growth",
     content:
-      "We professionally manage your social media accounts, employing integrated strategies to develop engaging content and interact instantly with your followers. Our expertise spans all major platforms, enhancing your brand's visibility and digital performance.",
+      "We professionally manage your social media accounts, employing integrated strategies to develop engaging content and interact instantly with your followers across all major platforms.",
+    image: "/images/management.jpg",
+    accent: "#00d4aa",
+  },
+  {
+    id: 4,
+    title: "Content Strategy",
+    subtitle: "Storytelling",
+    content:
+      "Crafting compelling narratives that resonate with your audience. We develop content calendars, write copy, and create multimedia content that drives engagement and conversions.",
+    image: "/images/content.jpg",
+    accent: "#ff6b35",
   },
 ];
 
-const Card = ({ title, content, index, targetRef, totalCards }) => {
+const ServiceCard = ({ service, index }) => {
+  const cardRef = useRef(null);
+
+  return (
+    <motion.div
+      ref={cardRef}
+      className="relative flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] h-[70vh] group cursor-grab active:cursor-grabbing"
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, delay: index * 0.1 }}
+      viewport={{ once: true }}
+    >
+      {/* Card Container */}
+      <div className="relative w-full h-full rounded-3xl overflow-hidden bg-[#0a0a0a] border border-white/10 transition-all duration-500 group-hover:border-white/20">
+        {/* Background Gradient */}
+        <div
+          className="absolute inset-0 opacity-20 transition-opacity duration-500 group-hover:opacity-40"
+          style={{
+            background: `radial-gradient(circle at 30% 20%, ${service.accent}40 0%, transparent 50%)`,
+          }}
+        />
+
+        {/* Number Badge */}
+        <div
+          className="absolute top-6 left-6 w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold text-white border-2 transition-all duration-300 group-hover:scale-110"
+          style={{ borderColor: service.accent, color: service.accent }}
+        >
+          {String(index + 1).padStart(2, "0")}
+        </div>
+
+        {/* Content */}
+        <div className="absolute inset-0 flex flex-col justify-end p-8 md:p-10">
+          {/* Subtitle */}
+          <motion.span
+            className="text-sm uppercase tracking-widest mb-2 font-medium"
+            style={{ color: service.accent }}
+          >
+            {service.subtitle}
+          </motion.span>
+
+          {/* Title */}
+          <h3 className="font-montserrat text-3xl md:text-4xl font-bold text-white mb-4 leading-tight">
+            {service.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-gray-400 text-base leading-relaxed mb-6 line-clamp-3 group-hover:line-clamp-none transition-all duration-300">
+            {service.content}
+          </p>
+
+          {/* CTA Button */}
+          <motion.button
+            className="self-start px-6 py-3 rounded-full text-sm font-semibold text-white border border-white/20 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:bg-white/10 hover:border-white/40"
+            whileHover={{ x: 5 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Learn More →
+          </motion.button>
+        </div>
+
+        {/* Decorative Elements */}
+        <div
+          className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-30 transition-opacity duration-500 group-hover:opacity-50"
+          style={{ backgroundColor: service.accent }}
+        />
+
+        {/* Corner Accent */}
+        <div
+          className="absolute bottom-0 right-0 w-32 h-32 opacity-20"
+          style={{
+            background: `linear-gradient(135deg, transparent 50%, ${service.accent} 50%)`,
+          }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+export default function Services() {
+  const containerRef = useRef(null);
+  const targetRef = useRef(null);
+
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   });
-
-  const cardStart = index / totalCards;
-  const cardEnd = (index + 1) / totalCards;
 
   const smoothProgress = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -38,102 +173,81 @@ const Card = ({ title, content, index, targetRef, totalCards }) => {
     restDelta: 0.001,
   });
 
-  // Card slides in from right horizontally
+  // Calculate total scroll distance based on number of cards
   const x = useTransform(
     smoothProgress,
-    [cardStart, cardEnd],
-    ["100vw", "0vw"]
+    [0, 1],
+    ["0%", `-${(services.length - 1) * 37}%`]
   );
-
-  // Scale down when next card comes
-  const scale = useTransform(
-    smoothProgress,
-    [cardEnd, cardEnd + 0.1],
-    [1, 0.95]
-  );
-
-  const opacity = useTransform(
-    smoothProgress,
-    [cardStart, cardStart + 0.1, cardEnd, cardEnd + 0.15],
-    [0, 1, 1, index === totalCards - 1 ? 1 : 0.2]
-  );
-
-  const isLastCard = index === totalCards - 1;
-  const finalOpacity = isLastCard
-    ? useTransform(smoothProgress, [cardStart, cardStart + 0.1], [0, 1])
-    : opacity;
-
-  // Offset each card to the right based on index
-  const leftOffset = index * 60; // 60px offset per card
-
-  return (
-    <motion.div
-      className="absolute top-1/2 -translate-y-1/2 h-[70vh] flex bg-[#111] border border-[#222] rounded-3xl overflow-hidden hover:border-gray-600 transition-colors duration-500"
-      style={{
-        x,
-        scale,
-        opacity: finalOpacity,
-        left: `calc(10vw + ${leftOffset}px)`,
-        width: `calc(80vw - ${leftOffset}px)`,
-        zIndex: index,
-      }}
-    >
-      {/* Vertical Title Tab */}
-      <div className="relative w-16 md:w-20 flex-shrink-0 bg-[#0a0a0a] border-r border-[#222] flex items-center justify-center">
-        <span
-          className="text-white text-sm md:text-base font-bold uppercase tracking-widest whitespace-nowrap"
-          style={{
-            writingMode: "vertical-rl",
-            textOrientation: "mixed",
-            transform: "rotate(180deg)",
-          }}
-        >
-          {String(index + 1).padStart(2, "0")}. {title}
-        </span>
-      </div>
-
-      {/* Card Content Area */}
-      <div className="relative flex-1 p-8 md:p-12 overflow-hidden">
-        {/* Dotted Glow Background */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-          <DottedGlowBackground
-            darkColor="oklch(29.3% 0.136 325.661)"
-            glowColor="oklch(74% 0.238 322.16)"
-            gap={40}
-            radius={4}
-          />
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 flex flex-col justify-center h-full">
-          <p className="text-lg md:text-xl text-gray-400 leading-relaxed max-w-prose">
-            {content}
-          </p>
-        </div>
-
-        {/* Corner glow effect */}
-        <div className="absolute -bottom-20 -right-20 w-64 h-64 bg-white/5 rounded-full blur-[80px] pointer-events-none" />
-      </div>
-    </motion.div>
-  );
-};
-
-export default function Services() {
-  const targetRef = useRef(null);
 
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-black">
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        {services.map((service, index) => (
-          <Card
-            key={service.id}
-            title={service.title}
-            content={service.content}
-            index={index}
-            targetRef={targetRef}
-            totalCards={services.length}
+      {/* Sticky Container */}
+      <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
+        {/* Section Header */}
+        <div className="px-8 md:px-16 mb-8">
+          <motion.span
+            className="text-[#4900f4] text-sm uppercase tracking-widest font-medium"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            What We Do
+          </motion.span>
+          <TypewriterText
+            text="Our Services"
+            className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-2"
+            delay={200}
           />
-        ))}
+        </div>
+
+        {/* Horizontal Scroll Container */}
+        <motion.div
+          ref={containerRef}
+          className="flex gap-6 md:gap-8 pl-8 md:pl-16"
+          style={{ x }}
+        >
+          {services.map((service, index) => (
+            <ServiceCard key={service.id} service={service} index={index} />
+          ))}
+
+          {/* End Card - CTA */}
+          <motion.div
+            className="flex-shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] h-[70vh] flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            <div className="text-center px-8">
+              <h3 className="font-montserrat text-3xl md:text-4xl font-bold text-white mb-4">
+                Ready to grow?
+              </h3>
+              <p className="text-gray-400 mb-8 max-w-sm mx-auto">
+                Let's discuss how we can help elevate your brand to the next
+                level.
+              </p>
+              <motion.button
+                className="px-8 py-4 rounded-full text-base font-semibold text-black bg-[#4900f4] hover:bg-[#5a1fff] transition-colors duration-300"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.98 }}
+                style={{ color: "white" }}
+              >
+                Get in Touch
+              </motion.button>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        {/* Progress Indicator */}
+        <div className="absolute bottom-8 left-8 md:left-16 flex items-center gap-4">
+          <div className="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full bg-[#4900f4] rounded-full"
+              style={{ scaleX: smoothProgress, transformOrigin: "left" }}
+            />
+          </div>
+          <span className="text-white/50 text-sm">Scroll to explore</span>
+        </div>
       </div>
     </section>
   );
