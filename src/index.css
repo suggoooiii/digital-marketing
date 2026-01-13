@@ -1,12 +1,40 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
+/* Montserrat Variable Font */
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.woff2")
+      format("woff2"),
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.woff")
+      format("woff"),
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.ttf")
+      format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.woff2")
+      format("woff2"),
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.woff")
+      format("woff"),
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.ttf")
+      format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: italic;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  /* --color-brand-dark: #0f0518; */
-  /* --color-brand-purple: #4c1d95; */
+  --color-brand-dark: #000000;
+  --color-brand-violet: #a78bfa;
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-montserrat: "Montserrat", system-ui, sans-serif;
 }
 
 body {

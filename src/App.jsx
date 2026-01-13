@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import Intro from "@components/Intro";
 import Services from "@components/Services";
 import Section from "@components/Sections";
+import Navbar from "@components/Navbar";
 import DettedGlowBackground from "@components/DettedGlowBackground";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 import StickySection from "@components/effects/Stickysection";
@@ -79,6 +80,7 @@ export default function App() {
 
   return (
     <main>
+      <Navbar />
       <Intro />
       <Services />
       <Section />
