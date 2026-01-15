@@ -1,6 +1,5 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
-import laptop3 from "/src/assets/img/laptop2.jpg";
 import swirling from "/src/assets/swirlingObj.gif";
 
 export default function Section() {

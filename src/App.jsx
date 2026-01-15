@@ -6,7 +6,6 @@ import Section from "@components/Sections";
 import Navbar from "@components/Navbar";
 import ContactModal from "@components/ContactModal";
 import FloatingContactButton from "@components/FloatingContactButton";
-import DettedGlowBackground from "@components/DettedGlowBackground";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 import StickyFooter from "@components/StickyFooter";
 import LocomotiveScroll from "locomotive-scroll";
