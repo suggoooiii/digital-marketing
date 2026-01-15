@@ -8,7 +8,8 @@ export default function Section() {
     target: container,
     offset: ["start end", "end start"],
   });
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const y = useTransform(scrollYProgress, [0, 1], ["-40%", "50%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], ["10%", "-80%"]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -101,7 +102,7 @@ export default function Section() {
 
       {/* Background - Swirling GIF with parallax */}
       <div className="absolute inset-0 z-0">
-        <motion.div style={{ y }} className="relative w-full h-full">
+        <motion.div style={{ y, scale }} className="relative w-full h-full">
           <img
             src={swirling}
             alt="background"

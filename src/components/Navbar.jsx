@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import logoImg from "/src/assets/img/kaymarklogog.png";
+import logoImg from "/images/kaymarklogog.png";
 
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 

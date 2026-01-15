@@ -2,13 +2,12 @@ import {
   useScroll,
   useTransform,
   motion,
-  useSpring,
   useInView,
   AnimatePresence,
 } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
 
-// Animated text component - types out characters one by one
+// Animated text component
 const TypewriterText = ({ text, className, delay = 0 }) => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
@@ -61,6 +60,7 @@ const services = [
       ],
     },
     accent: "#4900f4",
+    icon: "📱",
   },
   {
     id: 2,
@@ -72,18 +72,19 @@ const services = [
       description:
         "We create and optimize high-performance advertising campaigns that drive real results, from brand awareness to customer acquisition and conversions.",
       features: [
-        "Meta Ads (Facebook & Instagram) campaigns to increase awareness, engagement, and customer acquisition",
-        "Google Ads campaigns targeting high-purchasing-power audiences",
+        "Meta Ads (Facebook & Instagram) campaigns",
+        "Google Ads targeting high-purchasing-power audiences",
         "TikTok Ads for viral content and wide reach",
         "LinkedIn Ads targeting the B2B sector",
-        "Campaign optimization through A/B testing and audience analysis to achieve higher efficiency and better ad spend",
+        "Campaign optimization through A/B testing",
       ],
     },
     accent: "#f400a1",
+    icon: "📈",
   },
   {
     id: 3,
-    title: "Content Creation (Photos & Videos)",
+    title: "Content Creation",
     subtitle: "Visual Storytelling",
     content:
       "Professional video production and photography services tailored for ads, campaigns, and social media content.",
@@ -91,31 +92,33 @@ const services = [
       description:
         "From concept to final cut, we produce compelling visual content that captures attention and tells your brand's story effectively.",
       features: [
-        "Professional video production (ads, campaigns, client testimonials)",
-        "Short-form, trend-driven content production (Reels & TikTok)",
-        "Daily lifestyle photography for restaurants and products",
-        "End-to-end production from copywriting and shooting to editing and post-production",
+        "Professional video production (ads, campaigns, testimonials)",
+        "Short-form content (Reels & TikTok)",
+        "Lifestyle photography for restaurants and products",
+        "End-to-end production from shooting to editing",
       ],
     },
     accent: "#00d4aa",
+    icon: "🎬",
   },
   {
     id: 4,
-    title: "Creative Design & Brand Identity",
+    title: "Brand Identity",
     subtitle: "Visual Excellence",
     content:
-      "Complete brand identity development and creative design services to establish a consistent, memorable visual presence.",
+      "Complete brand identity development and creative design services to establish a memorable visual presence.",
     expandedContent: {
       description:
         "We craft distinctive visual identities and creative designs that make your brand stand out and resonate with your target audience.",
       features: [
-        "Developing a complete visual brand identity (logos, typography, and colors)",
-        "Creative designs for advertising campaigns and social media posts",
+        "Complete visual brand identity (logos, typography, colors)",
+        "Creative designs for campaigns and social media",
         "Packaging and product label design",
-        "Maintaining a unified and consistent visual style across all platforms",
+        "Unified visual style across all platforms",
       ],
     },
     accent: "#ff6b35",
+    icon: "🎨",
   },
   {
     id: 5,
@@ -125,153 +128,105 @@ const services = [
       "High-quality digital and offset printing services for all your branding and marketing materials.",
     expandedContent: {
       description:
-        "Premium printing solutions that bring your brand to life in the physical world, from business essentials to large-format displays.",
+        "Premium printing solutions that bring your brand to life in the physical world.",
       features: [
-        "High-quality digital and offset printing services",
-        "Large-format printing (banners, roll-ups, posters, and signage)",
-        "Business printing (business cards, brochures, flyers, catalogs)",
-        "Branding materials (stickers, packaging, labels, and promotional items)",
-        "Indoor and outdoor signage with durable, premium finishes",
-        "Customized print solutions tailored to brand identity and campaign needs",
+        "High-quality digital and offset printing",
+        "Large-format printing (banners, roll-ups, signage)",
+        "Business printing (cards, brochures, catalogs)",
+        "Branding materials (stickers, packaging, labels)",
       ],
     },
     accent: "#ffd700",
+    icon: "🖨️",
   },
   {
     id: 6,
-    title: "Event Management & Activation",
+    title: "Event Management",
     subtitle: "Memorable Experiences",
     content:
       "End-to-end event planning and brand activations that create engaging, unforgettable experiences.",
     expandedContent: {
       description:
-        "We design and execute impactful events and activations that connect your brand with audiences in meaningful, memorable ways.",
+        "We design and execute impactful events and activations that connect your brand with audiences.",
       features: [
         "End-to-end event planning and execution",
-        "Corporate events, product launches, exhibitions, and brand activations",
-        "Booth and stand design with full branding setup",
-        "On-site branding (backdrops, banners, screens, and printed materials)",
-        "Coordination with vendors, logistics, and event timelines",
-        "Creative concepts to deliver engaging and memorable brand experiences",
+        "Corporate events, launches, exhibitions",
+        "Booth and stand design with full branding",
+        "On-site branding and coordination",
       ],
     },
     accent: "#9945FF",
+    icon: "🎪",
   },
 ];
 
-const ServiceCard = ({
-  service,
-  index,
-  isExpanded,
-  isBlurred,
-  onExpand,
-  onClose,
-}) => {
+const ServiceCard = ({ service, index, isExpanded, onExpand, onClose }) => {
   const cardRef = useRef(null);
-
-  const handleClick = () => {
-    if (isExpanded) {
-      onClose();
-    } else {
-      // This will expand this card (and implicitly close any other expanded card)
-      onExpand(service.id);
-
-      // Scroll the card into view
-      setTimeout(() => {
-        if (cardRef.current) {
-          cardRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "nearest",
-            inline: "center",
-          });
-        }
-      }, 100);
-    }
-  };
 
   return (
     <motion.div
       ref={cardRef}
-      className={`relative shrink-0 cursor-pointer transition-all duration-500 ${
-        isExpanded
-          ? "w-[85vw] md:w-[70vw] lg:w-[60vw]"
-          : "w-[85vw] md:w-[45vw] lg:w-[35vw]"
-      }`}
-      initial={{ opacity: 0, y: 50 }}
+      className="relative shrink-0 cursor-pointer"
+      initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, delay: index * 0.1 }}
+      transition={{ duration: 0.5, delay: index * 0.08 }}
       viewport={{ once: true }}
-      onClick={handleClick}
-      style={{
-        filter: isBlurred ? "blur(8px)" : "blur(0px)",
-        opacity: isBlurred ? 0.3 : 1,
-      }}
+      onClick={() => (isExpanded ? onClose() : onExpand(service.id))}
     >
       <motion.div
-        className={`relative w-full rounded-3xl overflow-hidden bg-[#0a0a0a] border transition-all duration-500 ${
-          isExpanded
-            ? "border-white/30 h-auto min-h-[70vh]"
-            : "border-white/10 hover:border-white/30 hover:scale-[1.02] h-[70vh]"
-        }`}
+        className="relative overflow-hidden rounded-2xl bg-[#111] border border-white/10 hover:border-white/20 transition-all duration-300"
+        animate={{
+          width: isExpanded ? "min(500px, 85vw)" : "280px",
+          height: isExpanded ? "auto" : "380px",
+        }}
+        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+        whileHover={
+          !isExpanded ? { y: -8, borderColor: "rgba(255,255,255,0.3)" } : {}
+        }
       >
-        {/* Background Gradient */}
+        {/* Accent gradient */}
         <div
-          className="absolute inset-0 opacity-20 transition-opacity duration-500"
+          className="absolute inset-0 opacity-10"
           style={{
-            background: `radial-gradient(circle at 30% 20%, ${service.accent}40 0%, transparent 50%)`,
+            background: `linear-gradient(135deg, ${service.accent}50 0%, transparent 60%)`,
           }}
         />
 
-        {/* Number Badge - always absolute positioned */}
-        <div
-          className="absolute top-6 left-6 w-12 h-12 rounded-full border-2 transition-all duration-300 flex items-center justify-center z-20 bg-[#0a0a0a]"
-          style={{ borderColor: service.accent, color: service.accent }}
-        >
-          <span className="text-lg font-bold">
-            {String(index + 1).padStart(2, "0")}
-          </span>
-        </div>
-
-        {/* Close Button - only show when expanded */}
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.button
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              onClick={(e) => {
-                e.stopPropagation();
-                onClose();
-              }}
-              className="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-white/20 transition-colors z-20"
-            >
-              ✕
-            </motion.button>
-          )}
-        </AnimatePresence>
-
         {/* Content */}
-        <div
-          className={`flex flex-col p-8 md:p-10 ${
-            isExpanded
-              ? "relative pt-28 md:pt-28"
-              : "absolute bottom-0 left-0 right-0"
-          }`}
-        >
-          <motion.span
-            className={`text-sm uppercase tracking-widest mb-2 font-medium ${
-              isExpanded ? "ml-16" : ""
-            }`}
+        <div className="relative p-6 h-full flex flex-col">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-4">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
+              style={{ backgroundColor: `${service.accent}20` }}
+            >
+              {service.icon}
+            </div>
+            {isExpanded && (
+              <motion.button
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onClose();
+                }}
+                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 text-sm"
+              >
+                ✕
+              </motion.button>
+            )}
+          </div>
+
+          {/* Subtitle */}
+          <span
+            className="text-xs uppercase tracking-widest font-medium mb-2"
             style={{ color: service.accent }}
           >
             {service.subtitle}
-          </motion.span>
+          </span>
 
-          <h3
-            className={`font-montserrat text-2xl md:text-3xl font-bold text-white mb-4 leading-tight ${
-              isExpanded ? "" : "min-h-[4.5rem] md:min-h-[5rem]"
-            }`}
-          >
+          {/* Title */}
+          <h3 className="font-montserrat text-lg font-bold text-white mb-3 leading-tight">
             {service.title}
           </h3>
 
@@ -279,49 +234,42 @@ const ServiceCard = ({
             {isExpanded ? (
               <motion.div
                 key="expanded"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="flex-1"
               >
-                {/* Description */}
-                <p className="text-gray-300 text-lg leading-relaxed mb-6">
+                <p className="text-gray-400 text-sm leading-relaxed mb-5">
                   {service.expandedContent.description}
                 </p>
 
-                {/* Features */}
-                <div className="mb-6">
-                  <h4 className="text-white font-semibold mb-4">
-                    What's included:
-                  </h4>
-                  <ul className="space-y-3">
-                    {service.expandedContent.features.map((feature, i) => (
-                      <motion.li
-                        key={i}
-                        className="flex items-start gap-3 text-gray-400"
-                        initial={{ opacity: 0, x: -20 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.05 }}
-                      >
-                        <span
-                          className="w-2 h-2 rounded-full mt-2 flex-shrink-0"
-                          style={{ backgroundColor: service.accent }}
-                        />
-                        {feature}
-                      </motion.li>
-                    ))}
-                  </ul>
-                </div>
+                <ul className="space-y-2 mb-6">
+                  {service.expandedContent.features.map((feature, i) => (
+                    <motion.li
+                      key={i}
+                      className="flex items-start gap-2 text-gray-400 text-sm"
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: i * 0.05 }}
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
+                        style={{ backgroundColor: service.accent }}
+                      />
+                      {feature}
+                    </motion.li>
+                  ))}
+                </ul>
 
-                {/* CTA */}
                 <motion.button
-                  className="px-8 py-4 rounded-full text-base font-semibold text-white transition-all duration-300"
+                  className="px-5 py-2.5 rounded-full text-sm font-medium text-white"
                   style={{ backgroundColor: service.accent }}
-                  whileHover={{ scale: 1.05 }}
+                  whileHover={{ scale: 1.03 }}
                   whileTap={{ scale: 0.98 }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  Get Started →
+                  Learn More →
                 </motion.button>
               </motion.div>
             ) : (
@@ -330,39 +278,38 @@ const ServiceCard = ({
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
+                className="flex-1 flex flex-col"
               >
-                <p className="text-gray-400 text-base leading-relaxed mb-6 line-clamp-2">
+                <p className="text-gray-500 text-sm leading-relaxed flex-1">
                   {service.content}
                 </p>
 
-                <div className="self-start inline-block px-6 py-3 rounded-full text-sm font-semibold text-white border border-white/20 bg-white/5 backdrop-blur-sm">
-                  Click to expand →
+                {/* Bottom indicator */}
+                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
+                  <span className="text-xs text-gray-600">Click to expand</span>
+                  <motion.span
+                    className="text-gray-600"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ repeat: Infinity, duration: 1.5 }}
+                  >
+                    →
+                  </motion.span>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
-        {/* Decorative glow */}
-        <div
-          className="absolute top-0 right-0 w-64 h-64 rounded-full blur-[100px] opacity-30"
-          style={{ backgroundColor: service.accent }}
-        />
-
-        {/* Corner Accent */}
-        <div
-          className="absolute bottom-0 right-0 w-32 h-32 opacity-20"
-          style={{
-            background: `linear-gradient(135deg, transparent 50%, ${service.accent} 50%)`,
-          }}
-        />
+        {/* Number badge */}
+        <div className="absolute bottom-4 right-4 text-4xl font-bold opacity-5 text-white">
+          {String(index + 1).padStart(2, "0")}
+        </div>
       </motion.div>
     </motion.div>
   );
 };
 
 export default function Services() {
-  const containerRef = useRef(null);
   const targetRef = useRef(null);
   const [expandedId, setExpandedId] = useState(null);
 
@@ -371,36 +318,24 @@ export default function Services() {
     offset: ["start start", "end end"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
+  // Removed useSpring - direct transform for snappier feel
+  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
 
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ["0%", `-${(services.length - 1) * 37}%`]
-  );
-
-  // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") {
-        setExpandedId(null);
-      }
+      if (e.key === "Escape") setExpandedId(null);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-black">
+    <section ref={targetRef} className="relative h-[200vh] bg-black">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
-        {/* Section Header */}
-        <div className="px-8 md:px-16 mb-8">
+        {/* Header */}
+        <div className="px-8 md:px-16 mb-10">
           <motion.span
-            className="text-[#4900f4] text-sm uppercase tracking-widest font-medium"
+            className="text-[#4900f4] text-xs uppercase tracking-widest font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -409,15 +344,14 @@ export default function Services() {
           </motion.span>
           <TypewriterText
             text="Our Services"
-            className="font-montserrat text-4xl md:text-5xl lg:text-6xl font-bold text-white mt-2"
+            className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2"
             delay={200}
           />
         </div>
 
-        {/* Horizontal Scroll Container */}
+        {/* Cards */}
         <motion.div
-          ref={containerRef}
-          className="flex gap-6 md:gap-8 pl-8 md:pl-16"
+          className="flex gap-5 pl-8 md:pl-16 pr-[20vw]"
           style={{ x }}
         >
           {services.map((service, index) => (
@@ -426,31 +360,27 @@ export default function Services() {
               service={service}
               index={index}
               isExpanded={expandedId === service.id}
-              isBlurred={expandedId !== null && expandedId !== service.id}
               onExpand={setExpandedId}
               onClose={() => setExpandedId(null)}
             />
           ))}
 
-          {/* End Card - CTA */}
+          {/* CTA Card */}
           <motion.div
-            className={`shrink-0 w-[85vw] md:w-[45vw] lg:w-[35vw] h-[70vh] flex items-center justify-center transition-all duration-500 ${
-              expandedId !== null ? "blur-sm opacity-30" : ""
-            }`}
+            className="shrink-0 w-[280px] h-[380px] flex items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
           >
-            <div className="text-center px-8">
-              <h3 className="font-montserrat text-3xl md:text-4xl font-bold text-white mb-4">
+            <div className="text-center px-6">
+              <h3 className="font-montserrat text-xl font-bold text-white mb-3">
                 Ready to grow?
               </h3>
-              <p className="text-gray-400 mb-8 max-w-sm mx-auto">
-                Let's discuss how we can help elevate your brand to the next
-                level.
+              <p className="text-gray-500 text-sm mb-6">
+                Let's elevate your brand together.
               </p>
               <motion.button
-                className="px-8 py-4 rounded-full text-base font-semibold text-white bg-[#4900f4] hover:bg-[#5a1fff] transition-colors duration-300"
+                className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -460,15 +390,15 @@ export default function Services() {
           </motion.div>
         </motion.div>
 
-        {/* Progress Indicator */}
-        <div className="absolute bottom-8 left-8 md:left-16 flex items-center gap-4">
-          <div className="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+        {/* Progress */}
+        <div className="absolute bottom-8 left-8 md:left-16 flex items-center gap-3">
+          <div className="w-24 h-0.5 bg-white/10 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-[#4900f4] rounded-full"
-              style={{ scaleX: smoothProgress, transformOrigin: "left" }}
+              style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
             />
           </div>
-          <span className="text-white/50 text-sm">Scroll to explore</span>
+          <span className="text-white/40 text-xs">Scroll</span>
         </div>
       </div>
     </section>

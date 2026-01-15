@@ -10,6 +10,7 @@ import FloatingContactButton from "@components/FloatingContactButton";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 import StickyFooter from "@components/StickyFooter";
 import LocomotiveScroll from "locomotive-scroll";
+import LogoReveal from "@components/LogoReveal";
 
 export default function App() {
   const scrollRef = useRef(null);
@@ -91,6 +92,7 @@ export default function App() {
         onClose={() => setIsContactOpen(false)}
       />
       <FloatingContactButton onClick={() => setIsContactOpen(true)} />
+      {/* <LogoReveal /> */}
       <Intro />
       <Services />
       <Section />
