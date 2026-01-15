@@ -3,6 +3,7 @@ import Lenis from "lenis";
 import Intro from "@components/Intro";
 import Services from "@components/Services";
 import Section from "@components/Sections";
+import Clients from "@components/Clients";
 import Navbar from "@components/Navbar";
 import ContactModal from "@components/ContactModal";
 import FloatingContactButton from "@components/FloatingContactButton";
@@ -13,15 +14,6 @@ import LocomotiveScroll from "locomotive-scroll";
 export default function App() {
   const scrollRef = useRef(null);
   const [isContactOpen, setIsContactOpen] = useState(false);
-
-  // useEffect(() => {
-  //   const lenis = new Lenis();
-  //   function raf(time) {
-  //     lenis.raf(time);
-  //     requestAnimationFrame(raf);
-  //   }
-  //   requestAnimationFrame(raf);
-  // }, []);
 
   useEffect(() => {
     const locomotiveScroll = new LocomotiveScroll();
@@ -102,7 +94,7 @@ export default function App() {
       <Intro />
       <Services />
       <Section />
-      <div className="h-screen flex items-center justify-center text-white"></div>
+      <Clients />
       <StickyFooter height={800} />
     </main>
   );
