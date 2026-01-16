@@ -15,7 +15,7 @@ export default function Intro() {
   const opacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
 
   return (
-    <div className="h-sc  reen overflow-hidden" ref={container}>
+    <div className="h-screen overflow-hidden" ref={container}>
       <div className="absolute z-10 w-full h-full flex items-center justify-center">
         {/* <TextHoverEffect text="Kay" /> */}
       </div>

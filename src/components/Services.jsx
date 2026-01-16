@@ -10,7 +10,7 @@ import { useRef, useState, useEffect } from "react";
 // Animated text component
 const TypewriterText = ({ text, className, delay = 0 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const isInView = useInView(ref, {});
   const [displayedText, setDisplayedText] = useState("");
 
   useEffect(() => {
