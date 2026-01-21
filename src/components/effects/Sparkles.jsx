@@ -5,7 +5,7 @@ const SparklesCore = ({
   background = "transparent",
   minSize = 0.4,
   maxSize = 1.4,
-  particleDensity = 1200,
+  particleDensity = 400,
   particleColor = "#FFFFFF",
   className = "",
 }) => {
@@ -33,7 +33,7 @@ const SparklesCore = ({
     // Create particles
     const createParticles = () => {
       const particleCount = Math.floor(
-        (dimensions.width * dimensions.height) / particleDensity
+        (dimensions.width * dimensions.height) / particleDensity,
       );
 
       for (let i = 0; i < particleCount; i++) {
@@ -41,10 +41,10 @@ const SparklesCore = ({
           x: Math.random() * dimensions.width,
           y: Math.random() * dimensions.height,
           size: Math.random() * (maxSize - minSize) + minSize,
-          speedX: (Math.random() - 0.5) * 0.3,
-          speedY: (Math.random() - 0.5) * 0.3,
+          speedX: (Math.random() - 0.5) * 1.2,
+          speedY: (Math.random() - 0.5) * 1.2,
           opacity: Math.random(),
-          opacitySpeed: (Math.random() - 0.5) * 0.01,
+          opacitySpeed: (Math.random() - 0.5) * 0.03,
         });
       }
     };
@@ -107,20 +107,17 @@ const SparklesCore = ({
 };
 
 // Main Sparkles component with the full layout
-export default function Sparkles({ text = "Kay Agency" }) {
-  const [particleColor, setParticleColor] = useState("#FFFFFF");
-
-  // Check for dark mode (you can adjust this based on your theme system)
-  useEffect(() => {
-    const isDark =
-      document.documentElement.classList.contains("dark") ||
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setParticleColor(isDark ? "#FFFFFF" : "#FFFFFF"); // Keep white for dark bg
-  }, []);
-
+export default function Sparkles({
+  text = "Kay Agency",
+  textSize = "text-3xl md:text-7xl lg:text-9xl",
+  particleDensity = 150,
+  particleColor = "#00bcff",
+}) {
   return (
     <div className="flex h-[40rem] w-full flex-col items-center justify-center overflow-hidden rounded-md bg-black">
-      <h1 className="relative z-20 text-center text-3xl font-bold text-white md:text-7xl lg:text-9xl">
+      <h1
+        className={`relative z-20 text-center font-bold text-white ${textSize}`}
+      >
         {text}
       </h1>
 
@@ -136,7 +133,7 @@ export default function Sparkles({ text = "Kay Agency" }) {
           background="transparent"
           minSize={0.4}
           maxSize={3.4}
-          particleDensity={1200}
+          particleDensity={particleDensity}
           particleColor={particleColor}
           className="h-full w-full"
         />

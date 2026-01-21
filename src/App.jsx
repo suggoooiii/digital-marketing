@@ -24,66 +24,6 @@ export default function App() {
     };
   }, []);
 
-  // const stickySections = [
-  //   {
-  //     id: 1,
-  //     offset: 0,
-  //     bgColor: "bg-[#C3ABFF]",
-  //     imgSrc: "src/assets/img/cc.jpg",
-  //     title: "Content Creation",
-  //     titleColor: "black",
-  //     p1: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     p2: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     children: "The algorithm's workings are shrouded in complexity...",
-  //   },
-  //   {
-  //     id: 2,
-  //     offset: 151.583,
-  //     bgColor: "bg-[#FED35B]",
-  //     imgSrc: "src/assets/img/seo.jpg",
-  //     title: "SEO",
-  //     titleColor: "black",
-  //     p1: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     p2: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     children: "The digital gospel etched into the very code...",
-  //   },
-  //   {
-  //     id: 3,
-  //     offset: 303.166,
-  //     bgColor: "bg-[#FFFFFF]",
-  //     imgSrc: "src/assets/img/adv.jpg",
-  //     title: "Advertisement",
-  //     titleColor: "black",
-  //     p1: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     p2: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     children: "The elusive entities, lacking human form...",
-  //   },
-  //   {
-  //     id: 4,
-  //     offset: 454.749,
-  //     bgColor: "bg-[#FBC1D4]",
-  //     imgSrc: "src/assets/img/brandstrategy.jpg",
-  //     title: "Brand Strategy",
-  //     titleColor: "black",
-  //     p1: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     p2: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     children:
-  //       "This overlooked realm, a consequence of algorithmic judgments...",
-  //   },
-  //   {
-  //     id: 5,
-  //     offset: 606.332,
-  //     bgColor: "bg-[#1E1E1E]",
-  //     imgSrc: "src/assets/img/visualidentity.jpg",
-  //     title: "Visual Identity",
-  //     titleColor: "white",
-  //     p1: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     p2: "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-  //     children:
-  //       "This overlooked realm, a consequence of algorithmic judgments...",
-  //   },
-  // ];
-
   return (
     <main ref={scrollRef}>
       <Navbar onContactOpen={() => setIsContactOpen(true)} />
@@ -92,10 +32,16 @@ export default function App() {
         onClose={() => setIsContactOpen(false)}
       />
       <FloatingContactButton onClick={() => setIsContactOpen(true)} />
-      <Sparkles text="Kay Agency" />
+      <div id="home">
+        <Sparkles text="Kay Agency" />
+      </div>
       {/* <Intro /> */}
-      <Services />
-      <Section />
+      <div id="services">
+        <Services />
+      </div>
+      <div id="about">
+        <Section />
+      </div>
       <Clients />
       <StickyFooter height={800} />
     </main>
