@@ -28,18 +28,20 @@ export default function FloatingContactButton({ onClick }) {
   const scale = useTransform(scrollY, [100, 300], [0.8, 1]);
 
   return (
-    <motion.button
-      onClick={onClick}
-      style={{ opacity, scale }}
-      className="fixed bottom-8 right-8 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#4900f4] text-white shadow-lg transition-colors hover:bg-[#5a1fff] hover:shadow-[0_0_30px_rgba(73,0,244,0.5)]"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.95 }}
-      aria-label="Contact us"
-    >
-      <MessageIcon />
+    <div className="fixed bottom-8 right-8 z-50">
+      <motion.button
+        onClick={onClick}
+        style={{ opacity, scale }}
+        className="relative flex h-14 w-14 items-center justify-center rounded-full bg-[#4900f4] text-white shadow-lg transition-colors hover:bg-[#5a1fff] hover:shadow-[0_0_30px_rgba(73,0,244,0.5)]"
+        whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
+        aria-label="Contact us"
+      >
+        <MessageIcon />
 
-      {/* Ping animation */}
-      <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4900f4] opacity-20" />
-    </motion.button>
+        {/* Ping animation */}
+        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#4900f4] opacity-20" />
+      </motion.button>
+    </div>
   );
 }

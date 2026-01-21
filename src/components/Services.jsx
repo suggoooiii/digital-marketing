@@ -160,29 +160,137 @@ const services = [
   },
 ];
 
-const ServiceCard = ({ service, index, isExpanded, onExpand, onClose }) => {
-  const cardRef = useRef(null);
+// Modal Sheet Component for expanded service details
+const ServiceModal = ({ service, onClose }) => {
+  useEffect(() => {
+    // Prevent body scroll when modal is open
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, []);
 
   return (
     <motion.div
-      ref={cardRef}
-      className="relative shrink-0 cursor-pointer"
+      className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      />
+
+      {/* Modal Content */}
+      <motion.div
+        className="relative w-full md:w-auto md:max-w-lg md:mx-4 bg-[#111] border border-white/10 rounded-t-3xl md:rounded-2xl overflow-hidden max-h-[85vh] md:max-h-[80vh]"
+        initial={{ y: "100%", opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: "100%", opacity: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* Drag indicator for mobile */}
+        <div className="md:hidden flex justify-center py-3">
+          <div className="w-10 h-1 rounded-full bg-white/20" />
+        </div>
+
+        {/* Accent gradient */}
+        <div
+          className="absolute inset-0 opacity-10 pointer-events-none"
+          style={{
+            background: `linear-gradient(135deg, ${service.accent}50 0%, transparent 60%)`,
+          }}
+        />
+
+        <div className="relative p-6 overflow-y-auto max-h-[calc(85vh-20px)] md:max-h-[calc(80vh-20px)]">
+          {/* Header */}
+          <div className="flex items-start justify-between mb-4">
+            <div
+              className="w-14 h-14 rounded-xl flex items-center justify-center text-3xl"
+              style={{ backgroundColor: `${service.accent}20` }}
+            >
+              {service.icon}
+            </div>
+            <button
+              onClick={onClose}
+              className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+
+          {/* Subtitle */}
+          <span
+            className="text-xs uppercase tracking-widest font-medium"
+            style={{ color: service.accent }}
+          >
+            {service.subtitle}
+          </span>
+
+          {/* Title */}
+          <h3 className="font-montserrat text-2xl font-bold text-white mt-2 mb-4">
+            {service.title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-gray-400 text-sm leading-relaxed mb-6">
+            {service.expandedContent.description}
+          </p>
+
+          {/* Features */}
+          <ul className="space-y-3 mb-8">
+            {service.expandedContent.features.map((feature, i) => (
+              <motion.li
+                key={i}
+                className="flex items-start gap-3 text-gray-300 text-sm"
+                initial={{ opacity: 0, x: -10 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.05 }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full mt-1.5 flex-shrink-0"
+                  style={{ backgroundColor: service.accent }}
+                />
+                {feature}
+              </motion.li>
+            ))}
+          </ul>
+
+          {/* CTA Button */}
+          <motion.button
+            className="w-full py-3.5 rounded-xl text-sm font-medium text-white"
+            style={{ backgroundColor: service.accent }}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+          >
+            Get Started →
+          </motion.button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+};
+
+// Desktop Card Component (for horizontal scroll)
+const DesktopServiceCard = ({ service, index, onExpand }) => {
+  return (
+    <motion.div
+      className="relative shrink-0 cursor-pointer w-[300px] h-[400px]"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, delay: index * 0.08 }}
       viewport={{ once: true }}
-      onClick={() => (isExpanded ? onClose() : onExpand(service.id))}
+      onClick={() => onExpand(service)}
     >
       <motion.div
-        className="relative overflow-hidden rounded-2xl bg-[#111] border border-white/10 hover:border-white/20 transition-all duration-300"
-        animate={{
-          width: isExpanded ? "min(500px, 85vw)" : "280px",
-          height: isExpanded ? "auto" : "380px",
-        }}
-        transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-        whileHover={
-          !isExpanded ? { y: -8, borderColor: "rgba(255,255,255,0.3)" } : {}
-        }
+        className="relative h-full overflow-hidden rounded-2xl bg-[#111] border border-white/10 transition-colors duration-300"
+        whileHover={{ y: -8, borderColor: "rgba(255,255,255,0.3)" }}
       >
         {/* Accent gradient */}
         <div
@@ -195,26 +303,11 @@ const ServiceCard = ({ service, index, isExpanded, onExpand, onClose }) => {
         {/* Content */}
         <div className="relative p-6 h-full flex flex-col">
           {/* Header */}
-          <div className="flex items-start justify-between mb-4">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl"
-              style={{ backgroundColor: `${service.accent}20` }}
-            >
-              {service.icon}
-            </div>
-            {isExpanded && (
-              <motion.button
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  onClose();
-                }}
-                className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center text-white/70 hover:bg-white/20 text-sm"
-              >
-                ✕
-              </motion.button>
-            )}
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl mb-4"
+            style={{ backgroundColor: `${service.accent}20` }}
+          >
+            {service.icon}
           </div>
 
           {/* Subtitle */}
@@ -230,74 +323,22 @@ const ServiceCard = ({ service, index, isExpanded, onExpand, onClose }) => {
             {service.title}
           </h3>
 
-          <AnimatePresence mode="wait">
-            {isExpanded ? (
-              <motion.div
-                key="expanded"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.2 }}
-                className="flex-1"
-              >
-                <p className="text-gray-400 text-sm leading-relaxed mb-5">
-                  {service.expandedContent.description}
-                </p>
+          {/* Content */}
+          <p className="text-gray-500 text-sm leading-relaxed flex-1">
+            {service.content}
+          </p>
 
-                <ul className="space-y-2 mb-6">
-                  {service.expandedContent.features.map((feature, i) => (
-                    <motion.li
-                      key={i}
-                      className="flex items-start gap-2 text-gray-400 text-sm"
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: i * 0.05 }}
-                    >
-                      <span
-                        className="w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0"
-                        style={{ backgroundColor: service.accent }}
-                      />
-                      {feature}
-                    </motion.li>
-                  ))}
-                </ul>
-
-                <motion.button
-                  className="px-5 py-2.5 rounded-full text-sm font-medium text-white"
-                  style={{ backgroundColor: service.accent }}
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Learn More →
-                </motion.button>
-              </motion.div>
-            ) : (
-              <motion.div
-                key="collapsed"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="flex-1 flex flex-col"
-              >
-                <p className="text-gray-500 text-sm leading-relaxed flex-1">
-                  {service.content}
-                </p>
-
-                {/* Bottom indicator */}
-                <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
-                  <span className="text-xs text-gray-600">Click to expand</span>
-                  <motion.span
-                    className="text-gray-600"
-                    animate={{ x: [0, 4, 0] }}
-                    transition={{ repeat: Infinity, duration: 1.5 }}
-                  >
-                    →
-                  </motion.span>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Bottom indicator */}
+          <div className="flex items-center gap-2 mt-4 pt-4 border-t border-white/5">
+            <span className="text-xs text-gray-600">Click to expand</span>
+            <motion.span
+              className="text-gray-600"
+              animate={{ x: [0, 4, 0] }}
+              transition={{ repeat: Infinity, duration: 1.5 }}
+            >
+              →
+            </motion.span>
+          </div>
         </div>
 
         {/* Number badge */}
@@ -309,28 +350,164 @@ const ServiceCard = ({ service, index, isExpanded, onExpand, onClose }) => {
   );
 };
 
+// Mobile Card Component (for vertical layout)
+const MobileServiceCard = ({ service, index, onExpand }) => {
+  return (
+    <motion.div
+      className="relative cursor-pointer"
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4, delay: index * 0.05 }}
+      viewport={{ once: true, margin: "-50px" }}
+      onClick={() => onExpand(service)}
+    >
+      <div className="relative overflow-hidden rounded-xl bg-[#111] border border-white/10 active:border-white/20 transition-colors">
+        {/* Accent gradient */}
+        <div
+          className="absolute inset-0 opacity-10"
+          style={{
+            background: `linear-gradient(135deg, ${service.accent}50 0%, transparent 60%)`,
+          }}
+        />
+
+        <div className="relative p-5 flex gap-4">
+          {/* Icon */}
+          <div
+            className="w-12 h-12 rounded-xl flex items-center justify-center text-2xl shrink-0"
+            style={{ backgroundColor: `${service.accent}20` }}
+          >
+            {service.icon}
+          </div>
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <span
+              className="text-[10px] uppercase tracking-widest font-medium"
+              style={{ color: service.accent }}
+            >
+              {service.subtitle}
+            </span>
+            <h3 className="font-montserrat text-base font-bold text-white mt-1 leading-tight">
+              {service.title}
+            </h3>
+            <p className="text-gray-500 text-xs leading-relaxed mt-2 line-clamp-2">
+              {service.content}
+            </p>
+          </div>
+
+          {/* Arrow */}
+          <div className="flex items-center">
+            <span className="text-gray-600 text-lg">→</span>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 export default function Services() {
   const targetRef = useRef(null);
-  const [expandedId, setExpandedId] = useState(null);
+  const containerRef = useRef(null);
+  const [selectedService, setSelectedService] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
+  // All hooks MUST be called before any conditional returns
   const { scrollYProgress } = useScroll({
     target: targetRef,
     offset: ["start start", "end end"],
   });
 
-  // Removed useSpring - direct transform for snappier feel
-  const x = useTransform(scrollYProgress, [0, 1], ["0%", "-65%"]);
+  // Calculate dynamic scroll distance based on content width
+  // 7 cards (6 services + 1 CTA) × 300px + gaps + padding
+  const totalCardsWidth = 7 * 300 + 6 * 20 + 64;
+  const x = useTransform(
+    scrollYProgress,
+    [0, 1],
+    [0, -(totalCardsWidth - 1200 + 100)],
+  );
+
+  // Check for mobile viewport - must be after all hooks
+  useEffect(() => {
+    setIsClient(true);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
-      if (e.key === "Escape") setExpandedId(null);
+      if (e.key === "Escape") setSelectedService(null);
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  // Mobile Layout - Vertical stacked cards
+  if (isMobile) {
+    return (
+      <section className="relative bg-black py-16 px-4">
+        {/* Header */}
+        <div className="mb-8">
+          <TypewriterText
+            text="Our Services"
+            className="font-montserrat text-2xl font-bold text-white"
+            delay={200}
+          />
+        </div>
+
+        {/* Cards Grid */}
+        <div className="flex flex-col gap-4">
+          {services.map((service, index) => (
+            <MobileServiceCard
+              key={service.id}
+              service={service}
+              index={index}
+              onExpand={setSelectedService}
+            />
+          ))}
+
+          {/* CTA Card */}
+          <motion.div
+            className="relative overflow-hidden rounded-xl border border-dashed border-white/20 bg-white/5 p-6 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h3 className="font-montserrat text-lg font-bold text-white mb-2">
+              Ready to grow?
+            </h3>
+            <p className="text-gray-500 text-sm mb-4">
+              Let's elevate your brand together.
+            </p>
+            <motion.button
+              className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
+              whileTap={{ scale: 0.95 }}
+            >
+              Get in Touch
+            </motion.button>
+          </motion.div>
+        </div>
+
+        {/* Modal */}
+        <AnimatePresence>
+          {selectedService && (
+            <ServiceModal
+              service={selectedService}
+              onClose={() => setSelectedService(null)}
+            />
+          )}
+        </AnimatePresence>
+      </section>
+    );
+  }
+
+  // Desktop Layout - Horizontal scroll
   return (
-    <section ref={targetRef} className="relative h-[200vh] bg-black">
+    <section ref={targetRef} className="relative h-[300vh] bg-black">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-8 md:px-16 mb-10">
@@ -338,10 +515,8 @@ export default function Services() {
             className="text-[#4900f4] text-xs uppercase tracking-widest font-medium"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            What We Do
-          </motion.span>
+            viewport={{}}
+          ></motion.span>
           <TypewriterText
             text="Our Services"
             className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2"
@@ -350,57 +525,64 @@ export default function Services() {
         </div>
 
         {/* Cards */}
-        <motion.div
-          className="flex gap-5 pl-8 md:pl-16 pr-[20vw]"
-          style={{ x }}
-        >
-          {services.map((service, index) => (
-            <ServiceCard
-              key={service.id}
-              service={service}
-              index={index}
-              isExpanded={expandedId === service.id}
-              onExpand={setExpandedId}
-              onClose={() => setExpandedId(null)}
-            />
-          ))}
+        <div ref={containerRef} className="overflow-hidden">
+          <motion.div className="flex gap-5 pl-8 md:pl-16" style={{ x }}>
+            {services.map((service, index) => (
+              <DesktopServiceCard
+                key={service.id}
+                service={service}
+                index={index}
+                onExpand={setSelectedService}
+              />
+            ))}
 
-          {/* CTA Card */}
-          <motion.div
-            className="shrink-0 w-[280px] h-[380px] flex items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-          >
-            <div className="text-center px-6">
-              <h3 className="font-montserrat text-xl font-bold text-white mb-3">
-                Ready to grow?
-              </h3>
-              <p className="text-gray-500 text-sm mb-6">
-                Let's elevate your brand together.
-              </p>
-              <motion.button
-                className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Get in Touch
-              </motion.button>
-            </div>
+            {/* CTA Card */}
+            <motion.div
+              className="shrink-0 w-[300px] h-[400px] flex items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+            >
+              <div className="text-center px-6">
+                <h3 className="font-montserrat text-xl font-bold text-white mb-3">
+                  Ready to grow?
+                </h3>
+                <p className="text-gray-500 text-sm mb-6">
+                  Let's elevate your brand together.
+                </p>
+                <motion.button
+                  className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get in Touch
+                </motion.button>
+              </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
 
         {/* Progress */}
         <div className="absolute bottom-8 left-8 md:left-16 flex items-center gap-3">
-          <div className="w-24 h-0.5 bg-white/10 rounded-full overflow-hidden">
+          <div className="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
             <motion.div
               className="h-full bg-[#4900f4] rounded-full"
               style={{ scaleX: scrollYProgress, transformOrigin: "left" }}
             />
           </div>
-          <span className="text-white/40 text-xs">Scroll</span>
+          <span className="text-white/40 text-xs">Scroll to explore</span>
         </div>
       </div>
+
+      {/* Modal */}
+      <AnimatePresence>
+        {selectedService && (
+          <ServiceModal
+            service={selectedService}
+            onClose={() => setSelectedService(null)}
+          />
+        )}
+      </AnimatePresence>
     </section>
   );
 }

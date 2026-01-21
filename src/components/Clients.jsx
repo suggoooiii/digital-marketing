@@ -116,31 +116,31 @@ export default function Clients() {
 
       {/* Bottom Stats - Minimal */}
       <motion.div
-        className="mx-auto mt-16 flex max-w-4xl flex-wrap items-center justify-center gap-8 px-8 md:gap-16"
+        className="mx-auto mt-16 flex max-w-4xl items-center justify-center gap-4 px-4 md:gap-16 md:px-8"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <div className="text-center">
-          <p className="font-montserrat text-3xl font-bold text-white md:text-4xl">
+          <p className="font-montserrat text-2xl font-bold text-white md:text-4xl">
             30+
           </p>
-          <p className="text-sm text-gray-500">Happy Clients</p>
+          <p className="text-xs text-gray-500 md:text-sm">Happy Clients</p>
         </div>
         <div className="h-8 w-px bg-white/10" />
         <div className="text-center">
-          <p className="font-montserrat text-3xl font-bold text-white md:text-4xl">
+          <p className="font-montserrat text-2xl font-bold text-white md:text-4xl">
             150+
           </p>
-          <p className="text-sm text-gray-500">Projects Delivered</p>
+          <p className="text-xs text-gray-500 md:text-sm">Projects Delivered</p>
         </div>
         <div className="h-8 w-px bg-white/10" />
         <div className="text-center">
-          <p className="font-montserrat text-3xl font-bold text-white md:text-4xl">
+          <p className="font-montserrat text-2xl font-bold text-white md:text-4xl">
             5+
           </p>
-          <p className="text-sm text-gray-500">Years Experience</p>
+          <p className="text-xs text-gray-500 md:text-sm">Years Experience</p>
         </div>
       </motion.div>
     </section>

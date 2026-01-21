@@ -1,9 +1,13 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import LocomotiveScroll from "locomotive-scroll";
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
+
+// Register GSAP plugins
+gsap.registerPlugin(ScrollTrigger);
 
 export default function StickyFooter({
   height = 800,
@@ -47,10 +51,10 @@ export default function StickyFooter({
             end: "top center",
             scrub: 1,
           },
-        }
+        },
       );
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
 
   return (

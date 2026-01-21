@@ -9,7 +9,7 @@ export default function Section() {
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-40%", "50%"]);
-  const scale = useTransform(scrollYProgress, [0, 1], ["10%", "-80%"]);
+  const scale = useTransform(scrollYProgress, [0, 1], ["10%", "-20%"]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -101,12 +101,15 @@ export default function Section() {
       </motion.div>
 
       {/* Background - Swirling GIF with parallax */}
-      <div className="absolute inset-0 z-0">
-        <motion.div style={{ y, scale }} className="relative w-full h-full">
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <motion.div
+          style={{ y, scale }}
+          className="relative w-full h-full flex items-center justify-center"
+        >
           <img
             src={swirling}
             alt="background"
-            className="absolute inset-0 w-full h-full object-cover opacity-15"
+            className="absolute min-w-[150%] md:min-w-full min-h-full object-cover opacity-15"
           />
           {/* Gradient overlays */}
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]" />
