@@ -96,7 +96,7 @@ export default function Clients() {
         <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wider text-[#4900f4]">
           Our Clients
         </span>
-        <h2 className="font-montserrat text-3xl font-bold text-white md:text-4xl lg:text-5xl">
+        <h2 className="font-['Gambarino'] text-3xl font-bold text-white md:text-4xl lg:text-5xl">
           Trusted by{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]">
             30+ Brands

@@ -6,6 +6,8 @@ import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
 
+import logobig from "../assets/img/logobig.png";
+
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
@@ -148,7 +150,7 @@ function FooterNav({ onContactOpen }) {
       transition={{ duration: 0.5, staggerChildren: 0.1 }}
     >
       {/* Contact Info */}
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-6 font-['Open_Sans']">
         <h3 className="text-sm uppercase tracking-wider text-white/50">
           Get in Touch
         </h3>
@@ -175,7 +177,7 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="text-lg">+971 54 499 9960</span>
+          <span className="font-['Outfit'] text-lg">+971 54 499 9960</span>
         </motion.a>
 
         {/* Email */}
@@ -200,7 +202,7 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="text-lg">info@kay-uae.com</span>
+          <span className="font-['Outfit'] text-lg">info@kay-uae.com</span>
         </motion.a>
 
         {/* Location */}
@@ -230,12 +232,12 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="text-lg">Abu Dhabi - Al Ain</span>
+          <span className="font-['Outfit'] text-lg">Abu Dhabi - Al Ain</span>
         </motion.div>
       </div>
 
       {/* Quick Links */}
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 md:ml-auto md:mr-32">
         <h3 className="mb-2 text-sm uppercase tracking-wider text-white/50">
           Quick Links
         </h3>
@@ -263,14 +265,24 @@ function FooterHero() {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <motion.h1
-        className="mt-10 text-[10vw] leading-[0.8] text-white"
-        initial={{ scale: 0.9 }}
-        whileInView={{ scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
-      >
-        Kay Agency
-      </motion.h1>
+      <div className="flex items-center gap-3 md:gap-4">
+        <motion.img
+          src={logobig}
+          alt="Kay Agency Logo"
+          className="h-10 w-10 object-contain md:h-14 md:w-14 lg:h-16 lg:w-16"
+          initial={{ opacity: 0, x: -20 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        />
+        <motion.h1
+          className="mt-10 font-['Gambarino'] text-[10vw] font-normal leading-[0.8] tracking-tight text-white"
+          initial={{ scale: 0.9 }}
+          whileInView={{ scale: 1 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+        >
+          Kay Agency
+        </motion.h1>
+      </div>
       <p className="text-white/60">©copyright</p>
     </motion.div>
   );

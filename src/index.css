@@ -4,7 +4,8 @@
 /* Montserrat Variable Font */
 @font-face {
   font-family: "Montserrat";
-  src: url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.woff2")
+  src:
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.woff2")
       format("woff2"),
     url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-Variable.woff")
       format("woff"),
@@ -17,7 +18,8 @@
 
 @font-face {
   font-family: "Montserrat";
-  src: url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.woff2")
+  src:
+    url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.woff2")
       format("woff2"),
     url("./assets/fonts/Montserrat/Fonts/WEB/fonts/Montserrat-VariableItalic.woff")
       format("woff"),
@@ -28,6 +30,36 @@
   font-style: italic;
 }
 
+/* Gambarino Font */
+@font-face {
+  font-family: "Gambarino";
+  src:
+    url("./assets/fonts/Gambarino_Complete/Fonts/WEB/fonts/Gambarino-Regular.woff2")
+      format("woff2"),
+    url("./assets/fonts/Gambarino_Complete/Fonts/WEB/fonts/Gambarino-Regular.woff")
+      format("woff"),
+    url("./assets/fonts/Gambarino_Complete/Fonts/WEB/fonts/Gambarino-Regular.ttf")
+      format("truetype");
+  font-weight: 400;
+  font-display: swap;
+  font-style: normal;
+}
+
+/* Outfit Variable Font */
+@font-face {
+  font-family: "Outfit";
+  src:
+    url("./assets/fonts/outfit/Fonts/WEB/fonts/Outfit-Variable.woff2")
+      format("woff2"),
+    url("./assets/fonts/outfit/Fonts/WEB/fonts/Outfit-Variable.woff")
+      format("woff"),
+    url("./assets/fonts/outfit/Fonts/WEB/fonts/Outfit-Variable.ttf")
+      format("truetype");
+  font-weight: 100 900;
+  font-display: swap;
+  font-style: normal;
+}
+
 @custom-variant dark (&:is(.dark *));
 
 @theme {
@@ -35,6 +67,7 @@
   --color-brand-violet: #a78bfa;
   --font-sans: "Inter", system-ui, sans-serif;
   --font-montserrat: "Montserrat", system-ui, sans-serif;
+  --font-syne: "Syne", system-ui, sans-serif;
 }
 
 body {

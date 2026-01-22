@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logoImg from "/images/kaymarklogog.png";
+import logoImg from "/images/logobig.png";
 
 const cx = (...classes) => classes.filter(Boolean).join(" ");
 
@@ -88,15 +88,21 @@ export default function Navbar({ onContactOpen }) {
   };
 
   return (
-    <div className="fixed left-0 right-0 top-0 z-50 px-4 py-4">
+    <div className="fixed left-0 right-0 top-0 z-50 px-4 py-4 font-['Open_Sans']">
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-center justify-between rounded-full border border-white/10 bg-[#0a0a0f]/80 px-4 py-2 backdrop-blur-xl">
+        <div className="flex items-center justify-between rounded-full border border-white/5 bg-white/5 px-4 py-2 backdrop-blur-md">
           {/* Logo */}
           <button
             onClick={() => scrollToSection("home")}
-            className="flex items-center gap-2 transition-opacity hover:opacity-80"
+            className="group flex items-center gap-2 transition-all duration-300 hover:scale-105"
           >
-            <img src={logoImg} alt="Kay Agency" className="h-8 w-auto" />
+            <div className="relative">
+              <img
+                src={logoImg}
+                alt="Kay Agency"
+                className="h-14 w-auto object-contain drop-shadow-[0_0_10px_rgba(73,0,244,0.5)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(73,0,244,0.8)]"
+              />
+            </div>
           </button>
 
           {/* Desktop Navigation - Floating Pills */}

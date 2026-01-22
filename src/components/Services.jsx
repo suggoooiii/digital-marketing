@@ -2,44 +2,9 @@ import {
   useScroll,
   useTransform,
   motion,
-  useInView,
   AnimatePresence,
 } from "framer-motion";
 import { useRef, useState, useEffect } from "react";
-
-// Animated text component
-const TypewriterText = ({ text, className, delay = 0 }) => {
-  const ref = useRef(null);
-  const isInView = useInView(ref, {});
-  const [displayedText, setDisplayedText] = useState("");
-
-  useEffect(() => {
-    if (isInView) {
-      let currentIndex = 0;
-      const timeout = setTimeout(() => {
-        const interval = setInterval(() => {
-          if (currentIndex <= text.length) {
-            setDisplayedText(text.slice(0, currentIndex));
-            currentIndex++;
-          } else {
-            clearInterval(interval);
-          }
-        }, 50);
-
-        return () => clearInterval(interval);
-      }, delay);
-
-      return () => clearTimeout(timeout);
-    }
-  }, [isInView, text, delay]);
-
-  return (
-    <h2 ref={ref} className={className}>
-      {displayedText}
-      <span className="animate-pulse">|</span>
-    </h2>
-  );
-};
 
 const services = [
   {
@@ -170,6 +135,12 @@ const ServiceModal = ({ service, onClose }) => {
     };
   }, []);
 
+  const handleGetStarted = () => {
+    onClose();
+    // Dispatch custom event to open contact form
+    window.dispatchEvent(new CustomEvent("openContactForm"));
+  };
+
   return (
     <motion.div
       className="fixed inset-0 z-50 flex items-end md:items-center justify-center"
@@ -234,7 +205,7 @@ const ServiceModal = ({ service, onClose }) => {
           </span>
 
           {/* Title */}
-          <h3 className="font-montserrat text-2xl font-bold text-white mt-2 mb-4">
+          <h3 className="font-['Gambarino'] text-2xl text-white mt-2 mb-4">
             {service.title}
           </h3>
 
@@ -268,6 +239,7 @@ const ServiceModal = ({ service, onClose }) => {
             style={{ backgroundColor: service.accent }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            onClick={handleGetStarted}
           >
             Get Started →
           </motion.button>
@@ -319,7 +291,7 @@ const DesktopServiceCard = ({ service, index, onExpand }) => {
           </span>
 
           {/* Title */}
-          <h3 className="font-montserrat text-lg font-bold text-white mb-3 leading-tight">
+          <h3 className="font-['Gambarino'] text-xl text-white mb-3 leading-tight">
             {service.title}
           </h3>
 
@@ -387,7 +359,7 @@ const MobileServiceCard = ({ service, index, onExpand }) => {
             >
               {service.subtitle}
             </span>
-            <h3 className="font-montserrat text-base font-bold text-white mt-1 leading-tight">
+            <h3 className="font-['Gambarino'] text-lg text-white mt-1 leading-tight">
               {service.title}
             </h3>
             <p className="text-gray-500 text-xs leading-relaxed mt-2 line-clamp-2">
@@ -419,8 +391,8 @@ export default function Services() {
   });
 
   // Calculate dynamic scroll distance based on content width
-  // 7 cards (6 services + 1 CTA) × 300px + gaps + padding
-  const totalCardsWidth = 7 * 300 + 6 * 20 + 64;
+  // 6 service cards × 300px + gaps + padding
+  const totalCardsWidth = 6 * 300 + 5 * 20 + 64;
   const x = useTransform(
     scrollYProgress,
     [0, 1],
@@ -452,11 +424,18 @@ export default function Services() {
       <section className="relative bg-black py-16 px-4">
         {/* Header */}
         <div className="mb-8">
-          <TypewriterText
-            text="Our Services"
-            className="font-montserrat text-2xl font-bold text-white"
-            delay={200}
-          />
+          <motion.h2
+            className="font-montserrat text-2xl font-bold uppercase tracking-wider"
+            style={{
+              WebkitTextStroke: "1px #4900f4",
+              WebkitTextFillColor: "transparent",
+            }}
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+          >
+            Our Services
+          </motion.h2>
         </div>
 
         {/* Cards Grid */}
@@ -469,27 +448,6 @@ export default function Services() {
               onExpand={setSelectedService}
             />
           ))}
-
-          {/* CTA Card */}
-          <motion.div
-            className="relative overflow-hidden rounded-xl border border-dashed border-white/20 bg-white/5 p-6 text-center"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h3 className="font-montserrat text-lg font-bold text-white mb-2">
-              Ready to grow?
-            </h3>
-            <p className="text-gray-500 text-sm mb-4">
-              Let's elevate your brand together.
-            </p>
-            <motion.button
-              className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
-              whileTap={{ scale: 0.95 }}
-            >
-              Get in Touch
-            </motion.button>
-          </motion.div>
         </div>
 
         {/* Modal */}
@@ -512,17 +470,17 @@ export default function Services() {
         {/* Header */}
         <div className="px-8 md:px-16 mb-10">
           <motion.span
-            className="text-[#4900f4] text-xs uppercase tracking-widest font-medium"
+            className="text-2xl md:text-3xl font-bold uppercase tracking-widest"
+            style={{
+              WebkitTextStroke: "1px #4900f4",
+              WebkitTextFillColor: "transparent",
+            }}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            viewport={{}}
-          ></motion.span>
-          <TypewriterText
-            text="Our Services"
-            className="font-montserrat text-3xl md:text-4xl lg:text-5xl font-bold text-white mt-2"
-            delay={200}
             viewport={{ once: true }}
-          />
+          >
+            Our Services
+          </motion.span>
         </div>
 
         {/* Cards */}
@@ -536,30 +494,6 @@ export default function Services() {
                 onExpand={setSelectedService}
               />
             ))}
-
-            {/* CTA Card */}
-            <motion.div
-              className="shrink-0 w-[300px] h-[400px] flex items-center justify-center rounded-2xl border border-dashed border-white/20 bg-white/5"
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-            >
-              <div className="text-center px-6">
-                <h3 className="font-montserrat text-xl font-bold text-white mb-3">
-                  Ready to grow?
-                </h3>
-                <p className="text-gray-500 text-sm mb-6">
-                  Let's elevate your brand together.
-                </p>
-                <motion.button
-                  className="px-6 py-3 rounded-full text-sm font-medium text-white bg-[#4900f4]"
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  Get in Touch
-                </motion.button>
-              </div>
-            </motion.div>
           </motion.div>
         </div>
 

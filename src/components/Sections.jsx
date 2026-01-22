@@ -46,14 +46,20 @@ export default function Section() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <motion.div variants={itemVariants}>
-          <span className="text-[#4900f4] font-semibold tracking-wider uppercase text-sm">
+          <span
+            className="text-2xl md:text-3xl font-bold uppercase tracking-widest"
+            style={{
+              WebkitTextStroke: "1px #4900f4",
+              WebkitTextFillColor: "transparent",
+            }}
+          >
             About Us
           </span>
         </motion.div>
 
         <motion.h2
           variants={itemVariants}
-          className="font-montserrat text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-tight mt-6"
+          className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mt-6"
         >
           We're{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]">
