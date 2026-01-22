@@ -8,9 +8,10 @@ import Navbar from "@components/Navbar";
 import ContactModal from "@components/ContactModal";
 import FloatingContactButton from "@components/FloatingContactButton";
 import { DottedGlowBackground } from "@components/ui/dotted-glow-background";
-import Sparkles from "@components/effects/Sparkles";
+// import Sparkles from "@components/effects/Sparkles";
 import StickyFooter from "@components/StickyFooter";
 import LocomotiveScroll from "locomotive-scroll";
+import liquidic from "/src/assets/videos/purple_liquid.mp4";
 
 export default function App() {
   const scrollRef = useRef(null);
@@ -35,13 +36,25 @@ export default function App() {
         phoneNumber="+971544999960"
         whatsappNumber="+971544999960"
       />
-      <div id="home">
-        <Sparkles
-          text="Kay Agency"
-          textSize="text-5xl md:text-7xl lg:text-9xl"
-          particleDensity={700}
-          particleColor="#00bcff"
-        />
+      <div id="home" className="relative h-screen w-full overflow-hidden">
+        {/* Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 h-full w-full object-cover"
+        >
+          <source src={liquidic} type="video/mp4" />
+        </video>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/20" />
+        {/* Hero Text */}
+        <div className="relative z-10 flex h-full items-center justify-center">
+          <h1 className="text-center font-montserrat text-5xl font-bold text-white md:text-7xl lg:text-9xl">
+            Kay Agency
+          </h1>
+        </div>
       </div>
       {/* <Intro /> */}
       <div id="services">
