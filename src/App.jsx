@@ -51,7 +51,7 @@ export default function App() {
         <Section />
       </div>
       <Clients />
-      <StickyFooter height={600} />
+      <StickyFooter height={600} onContactOpen={() => setIsContactOpen(true)} />
     </main>
   );
 }

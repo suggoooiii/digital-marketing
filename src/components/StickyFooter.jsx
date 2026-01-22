@@ -13,6 +13,7 @@ export default function StickyFooter({
   height = 800,
   backgroundColor = "#2a1a4a",
   children,
+  onContactOpen,
 }) {
   const containerRef = useRef(null);
   const footerRef = useRef(null);
@@ -81,7 +82,12 @@ export default function StickyFooter({
             top: `calc(100vh - ${height}px)`,
           }}
         >
-          {children || <FooterContent backgroundColor={backgroundColor} />}
+          {children || (
+            <FooterContent
+              backgroundColor={backgroundColor}
+              onContactOpen={onContactOpen}
+            />
+          )}
         </div>
       </div>
     </div>
@@ -90,7 +96,7 @@ export default function StickyFooter({
 
 // Default Footer Content Component
 
-function FooterContent({ backgroundColor = "#2a1a4a" }) {
+function FooterContent({ backgroundColor = "#2a1a4a", onContactOpen }) {
   return (
     <motion.div
       className="relative flex h-full w-full flex-col justify-between overflow-hidden px-12 py-8"
@@ -112,14 +118,28 @@ function FooterContent({ backgroundColor = "#2a1a4a" }) {
       />
       {/* Content */}
       <div className="relative z-10 flex h-full flex-col justify-between">
-        <FooterNav />
+        <FooterNav onContactOpen={onContactOpen} />
         <FooterHero />
       </div>
     </motion.div>
   );
 }
 
-function FooterNav() {
+function FooterNav({ onContactOpen }) {
+  const scrollToSection = (sectionId) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const quickLinks = [
+    { label: "Home", action: () => scrollToSection("home") },
+    { label: "Services", action: () => scrollToSection("services") },
+    { label: "About Us", action: () => scrollToSection("about") },
+    { label: "Connect With Us", action: onContactOpen },
+  ];
+
   return (
     <motion.div
       className="footer-animate flex flex-col gap-8 md:flex-row md:justify-between md:gap-20"
@@ -219,15 +239,16 @@ function FooterNav() {
         <h3 className="mb-2 text-sm uppercase tracking-wider text-white/50">
           Quick Links
         </h3>
-        {["Home", "Services", "About Us", "Contact"].map((link) => (
-          <motion.p
-            key={link}
-            className="cursor-pointer text-white transition-colors hover:text-[#4900f4]"
+        {quickLinks.map((link) => (
+          <motion.button
+            key={link.label}
+            onClick={link.action}
+            className="cursor-pointer text-left text-white transition-colors hover:text-[#4900f4]"
             whileHover={{ x: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
-            {link}
-          </motion.p>
+            {link.label}
+          </motion.button>
         ))}
       </div>
     </motion.div>
@@ -248,7 +269,7 @@ function FooterHero() {
         whileInView={{ scale: 1 }}
         transition={{ duration: 0.8, ease: "easeOut" }}
       >
-        Marketing Agency
+        Kay Agency
       </motion.h1>
       <p className="text-white/60">©copyright</p>
     </motion.div>
