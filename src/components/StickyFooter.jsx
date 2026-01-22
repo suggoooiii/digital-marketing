@@ -101,7 +101,7 @@ export default function StickyFooter({
 function FooterContent({ backgroundColor = "#2a1a4a", onContactOpen }) {
   return (
     <motion.div
-      className="relative flex h-full w-full flex-col justify-between overflow-hidden px-12 py-8"
+      className="relative flex h-full w-full flex-col justify-between overflow-hidden px-6 md:px-12 py-8"
       style={{ backgroundColor }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
@@ -144,13 +144,13 @@ function FooterNav({ onContactOpen }) {
 
   return (
     <motion.div
-      className="footer-animate flex flex-col gap-8 md:flex-row md:justify-between md:gap-20"
+      className="footer-animate flex flex-row justify-between gap-4 md:flex-row md:justify-between md:gap-20"
       initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, staggerChildren: 0.1 }}
     >
       {/* Contact Info */}
-      <div className="flex flex-col gap-6 font-['Open_Sans']">
+      <div className="flex flex-col gap-4 md:gap-6 font-['Open_Sans']">
         <h3 className="text-sm uppercase tracking-wider text-white/50">
           Get in Touch
         </h3>
@@ -162,9 +162,9 @@ function FooterNav({ onContactOpen }) {
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+          <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
             <svg
-              className="h-5 w-5"
+              className="h-4 w-4 md:h-5 md:w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -177,7 +177,9 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-lg">+971 54 499 9960</span>
+          <span className="font-['Outfit'] text-sm md:text-lg">
+            +971 54 499 9960
+          </span>
         </motion.a>
 
         {/* Email */}
@@ -187,9 +189,9 @@ function FooterNav({ onContactOpen }) {
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+          <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
             <svg
-              className="h-5 w-5"
+              className="h-4 w-4 md:h-5 md:w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -202,7 +204,9 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-lg">info@kay-uae.com</span>
+          <span className="font-['Outfit'] text-sm md:text-lg">
+            info@kay-uae.com
+          </span>
         </motion.a>
 
         {/* Location */}
@@ -211,9 +215,9 @@ function FooterNav({ onContactOpen }) {
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5">
+          <div className="flex h-8 w-8 md:h-10 md:w-10 items-center justify-center rounded-full bg-white/5">
             <svg
-              className="h-5 w-5"
+              className="h-4 w-4 md:h-5 md:w-5"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -232,7 +236,9 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-lg">Abu Dhabi - Al Ain</span>
+          <span className="font-['Outfit'] text-sm md:text-lg">
+            Abu Dhabi - Al Ain
+          </span>
         </motion.div>
       </div>
 
