@@ -120,41 +120,116 @@ function FooterContent({ backgroundColor = "#2a1a4a" }) {
 }
 
 function FooterNav() {
-  const navSections = [
-    {
-      title: "About",
-      links: ["Home", "Projects", "Our Mission", "Contact Us"],
-    },
-    {
-      title: "Education",
-      links: ["News", "Learn", "Certification", "Publications"],
-    },
-  ];
-
   return (
     <motion.div
-      className="footer-animate flex shrink-0 gap-20"
+      className="footer-animate flex flex-col gap-8 md:flex-row md:justify-between md:gap-20"
       initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, staggerChildren: 0.1 }}
     >
-      {navSections.map((section) => (
-        <div key={section.title} className="flex flex-col gap-2">
-          <h3 className="mb-2 text-sm uppercase text-white/50">
-            {section.title}
-          </h3>
-          {section.links.map((link) => (
-            <motion.p
-              key={link}
-              className="cursor-pointer text-white transition-colors hover:text-white/80"
-              whileHover={{ x: 5 }}
-              transition={{ type: "spring", stiffness: 300 }}
+      {/* Contact Info */}
+      <div className="flex flex-col gap-6">
+        <h3 className="text-sm uppercase tracking-wider text-white/50">
+          Get in Touch
+        </h3>
+
+        {/* Phone */}
+        <motion.a
+          href="tel:+971544999960"
+          className="group flex items-center gap-3 text-white transition-colors hover:text-[#4900f4]"
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
             >
-              {link}
-            </motion.p>
-          ))}
-        </div>
-      ))}
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+              />
+            </svg>
+          </div>
+          <span className="text-lg">+971 54 499 9960</span>
+        </motion.a>
+
+        {/* Email */}
+        <motion.a
+          href="mailto:info@kay-uae.com"
+          className="group flex items-center gap-3 text-white transition-colors hover:text-[#4900f4]"
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+              />
+            </svg>
+          </div>
+          <span className="text-lg">info@kay-uae.com</span>
+        </motion.a>
+
+        {/* Location */}
+        <motion.div
+          className="group flex items-center gap-3 text-white"
+          whileHover={{ x: 5 }}
+          transition={{ type: "spring", stiffness: 300 }}
+        >
+          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/5">
+            <svg
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={1.5}
+                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+              />
+            </svg>
+          </div>
+          <span className="text-lg">Abu Dhabi - Al Ain</span>
+        </motion.div>
+      </div>
+
+      {/* Quick Links */}
+      <div className="flex flex-col gap-2">
+        <h3 className="mb-2 text-sm uppercase tracking-wider text-white/50">
+          Quick Links
+        </h3>
+        {["Home", "Services", "About Us", "Contact"].map((link) => (
+          <motion.p
+            key={link}
+            className="cursor-pointer text-white transition-colors hover:text-[#4900f4]"
+            whileHover={{ x: 5 }}
+            transition={{ type: "spring", stiffness: 300 }}
+          >
+            {link}
+          </motion.p>
+        ))}
+      </div>
     </motion.div>
   );
 }

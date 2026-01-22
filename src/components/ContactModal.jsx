@@ -181,10 +181,15 @@ export default function ContactModal({ isOpen, onClose }) {
 
             {/* Close button */}
             <motion.button
-              onClick={onClose}
-              className="absolute right-4 top-4 rounded-full p-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onClose();
+              }}
+              className="absolute right-4 top-4 z-50 rounded-full p-2 text-gray-400 transition-colors hover:bg-white/10 hover:text-white"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.95 }}
+              type="button"
             >
               <XIcon />
             </motion.button>

@@ -31,9 +31,17 @@ export default function App() {
         isOpen={isContactOpen}
         onClose={() => setIsContactOpen(false)}
       />
-      <FloatingContactButton onClick={() => setIsContactOpen(true)} />
+      <FloatingContactButton
+        phoneNumber="+971544999960"
+        whatsappNumber="+971544999960"
+      />
       <div id="home">
-        <Sparkles text="Kay Agency" />
+        <Sparkles
+          text="Kay Agency"
+          textSize="text-5xl md:text-7xl lg:text-9xl"
+          particleDensity={700}
+          particleColor="#00bcff"
+        />
       </div>
       {/* <Intro /> */}
       <div id="services">
@@ -43,7 +51,7 @@ export default function App() {
         <Section />
       </div>
       <Clients />
-      <StickyFooter height={800} />
+      <StickyFooter height={600} />
     </main>
   );
 }
