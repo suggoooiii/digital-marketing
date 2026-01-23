@@ -79,25 +79,6 @@ export default function Section() {
           storytelling, data-driven strategies, and designs that leave lasting
           impressions.
         </motion.p>
-
-        <motion.div variants={itemVariants} className="mt-10">
-          <button className="group inline-flex items-center gap-3 rounded-full bg-white/5 border border-white/10 px-8 py-4 text-white font-semibold transition-all hover:bg-[#4900f4] hover:border-[#4900f4]">
-            Learn More About Us
-            <svg
-              className="w-5 h-5 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </motion.div>
       </motion.div>
 
       {/* Background - Swirling video with parallax */}

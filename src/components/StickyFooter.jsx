@@ -275,13 +275,13 @@ function FooterHero() {
         <motion.img
           src={logobig}
           alt="Kay Agency Logo"
-          className="h-10 w-10 object-contain md:h-14 md:w-14 lg:h-16 lg:w-16"
+          className="h-14 w-14 object-contain md:h-20 md:w-20 lg:h-24 lg:w-24"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         />
         <motion.h1
-          className="mt-10 font-['Gambarino'] text-[10vw] font-normal leading-[0.8] tracking-tight text-white"
+          className="mt-10 font-['Gambarino'] text-[8vw] md:text-[7vw] font-normal leading-[0.8] tracking-tight text-white"
           initial={{ scale: 0.9 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
