@@ -425,7 +425,7 @@ export default function Services() {
         {/* Header */}
         <div className="mb-8">
           <motion.h2
-            className="text-sm font-medium uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]"
+            className="font-['Libre_Baskerville'] text-lg italic text-white/80 tracking-wide"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -466,7 +466,7 @@ export default function Services() {
         {/* Header */}
         <div className="px-8 md:px-16 mb-10">
           <motion.span
-            className="text-sm md:text-base font-medium uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]"
+            className="font-['Libre_Baskerville'] text-lg md:text-xl italic text-white/80 tracking-wide"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

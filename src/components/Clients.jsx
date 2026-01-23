@@ -93,7 +93,7 @@ export default function Clients() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <span className="mb-4 inline-block text-sm font-semibold uppercase tracking-wider text-[#4900f4]">
+        <span className="mb-4 inline-block font-['Libre_Baskerville'] text-lg md:text-xl italic text-white/80 tracking-wide">
           Our Clients
         </span>
         <h2 className="font-['Gambarino'] text-3xl font-bold text-white md:text-4xl lg:text-5xl">
