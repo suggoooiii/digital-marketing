@@ -1,6 +1,6 @@
 import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
-import swirling from "/src/assets/swirlingObj.gif";
+import swirling from "/src/assets/swirlingObj.webm";
 
 export default function Section() {
   const container = useRef();
@@ -56,7 +56,7 @@ export default function Section() {
           className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mt-6"
         >
           We're{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#c8ff00]">
             Kay Agency
           </span>
         </motion.h2>
@@ -79,37 +79,22 @@ export default function Section() {
           storytelling, data-driven strategies, and designs that leave lasting
           impressions.
         </motion.p>
-
-        <motion.div variants={itemVariants} className="mt-10">
-          <button className="group inline-flex items-center gap-3 rounded-full bg-white/5 border border-white/10 px-8 py-4 text-white font-semibold transition-all hover:bg-[#4900f4] hover:border-[#4900f4]">
-            Learn More About Us
-            <svg
-              className="w-5 h-5 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </motion.div>
+      </motion.div>
       </motion.div>
 
-      {/* Background - Swirling GIF with parallax */}
+      {/* Background - Swirling video with parallax */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <motion.div
           style={{ y }}
           className="relative w-full h-full flex items-center justify-center"
         >
-          <motion.img
+          <motion.video
             style={{ scale, backgroundColor: "transparent" }}
             src={swirling}
-            alt="background"
+            autoPlay
+            loop
+            muted
+            playsInline
             className="absolute min-w-[150%] md:min-w-full min-h-full object-cover opacity-15"
           />
           {/* Gradient overlays */}

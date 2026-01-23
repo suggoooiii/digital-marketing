@@ -98,7 +98,7 @@ export default function Clients() {
         </span>
         <h2 className="font-['Gambarino'] text-3xl font-bold text-white md:text-4xl lg:text-5xl">
           Trusted by{" "}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#c8ff00]">
             30+ Brands
           </span>
         </h2>

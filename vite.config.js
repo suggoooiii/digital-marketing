@@ -13,4 +13,21 @@ export default defineConfig({
       "@components": path.resolve(__dirname, "./src/components"),
     },
   },
+
+  build: {
+    // Increase chunk size warning limit (optional - hides warning)
+    chunkSizeWarningLimit: 600,
+
+    // Code splitting for better caching
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          // Split vendor libraries into separate chunks
+          "vendor-react": ["react", "react-dom"],
+          "vendor-motion": ["framer-motion", "motion/react"],
+          "vendor-gsap": ["gsap", "@gsap/react"],
+        },
+      },
+    },
+  },
 });
