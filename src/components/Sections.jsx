@@ -46,13 +46,7 @@ export default function Section() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <motion.div variants={itemVariants}>
-          <span
-            className="text-2xl md:text-3xl font-bold uppercase tracking-widest"
-            style={{
-              WebkitTextStroke: "1px #4900f4",
-              WebkitTextFillColor: "transparent",
-            }}
-          >
+          <span className="text-sm md:text-base font-medium uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]">
             About Us
           </span>
         </motion.div>

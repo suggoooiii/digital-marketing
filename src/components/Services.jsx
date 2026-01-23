@@ -425,11 +425,7 @@ export default function Services() {
         {/* Header */}
         <div className="mb-8">
           <motion.h2
-            className="font-montserrat text-2xl font-bold uppercase tracking-wider"
-            style={{
-              WebkitTextStroke: "1px #4900f4",
-              WebkitTextFillColor: "transparent",
-            }}
+            className="text-sm font-medium uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -470,11 +466,7 @@ export default function Services() {
         {/* Header */}
         <div className="px-8 md:px-16 mb-10">
           <motion.span
-            className="text-2xl md:text-3xl font-bold uppercase tracking-widest"
-            style={{
-              WebkitTextStroke: "1px #4900f4",
-              WebkitTextFillColor: "transparent",
-            }}
+            className="text-sm md:text-base font-medium uppercase tracking-[0.3em] text-transparent bg-clip-text bg-gradient-to-r from-[#4900f4] to-[#c8ff00]"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}

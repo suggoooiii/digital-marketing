@@ -143,7 +143,7 @@ export default function App() {
             </p>
             <p className="text-xl text-white/80 md:text-2xl lg:text-3xl">
               for{" "}
-              <span className="font-['Libre_Baskerville'] italic text-[#4900f4]">
+              <span className="font-['Libre_Baskerville'] italic text-transparent bg-clip-text bg-gradient-to-r from-[#a78bfa] to-[#f472b6]">
                 modern brands
               </span>
             </p>
