@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import emailjs from "@emailjs/browser";
 
 const XIcon = () => (
   <svg
@@ -115,6 +116,7 @@ const itemVariants = {
 };
 
 export default function ContactModal({ isOpen, onClose }) {
+  const formRef = useRef();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -124,6 +126,7 @@ export default function ContactModal({ isOpen, onClose }) {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [error, setError] = useState("");
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -132,25 +135,39 @@ export default function ContactModal({ isOpen, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError("");
 
-    // Simulate API call
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      // EmailJS configuration - Replace these with your actual values
+      const serviceId =
+        import.meta.env.VITE_EMAILJS_SERVICE_ID || "YOUR_SERVICE_ID";
+      const templateId =
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID || "YOUR_TEMPLATE_ID";
+      const publicKey =
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY || "YOUR_PUBLIC_KEY";
 
-    setIsSubmitting(false);
-    setIsSuccess(true);
+      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey);
 
-    // Reset and close after success
-    setTimeout(() => {
-      setIsSuccess(false);
-      setFormData({
-        name: "",
-        email: "",
-        company: "",
-        service: "",
-        message: "",
-      });
-      onClose();
-    }, 2000);
+      setIsSubmitting(false);
+      setIsSuccess(true);
+
+      // Reset and close after success
+      setTimeout(() => {
+        setIsSuccess(false);
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          service: "",
+          message: "",
+        });
+        onClose();
+      }, 2000);
+    } catch (err) {
+      setIsSubmitting(false);
+      setError("Failed to send message. Please try again.");
+      console.error("EmailJS error:", err);
+    }
   };
 
   return (
@@ -237,6 +254,7 @@ export default function ContactModal({ isOpen, onClose }) {
               ) : (
                 <motion.form
                   key="form"
+                  ref={formRef}
                   onSubmit={handleSubmit}
                   className="relative space-y-5"
                 >
@@ -252,6 +270,7 @@ export default function ContactModal({ isOpen, onClose }) {
                       Tell us about your project and we'll get back to you
                       within 24 hours.
                     </p>
+                    {error && <p className="text-sm text-red-400">{error}</p>}
                   </motion.div>
 
                   {/* Name & Email Row */}
