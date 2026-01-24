@@ -1,6 +1,11 @@
-import { useScroll, useTransform, motion } from "framer-motion";
+import {
+  useScroll,
+  useTransform,
+  motion,
+  useMotionTemplate,
+} from "framer-motion";
 import { useRef } from "react";
-import swirling from "/src/assets/swirlingObj.webm";
+// import swirling from "/src/assets/swirlingObj.webm";
 
 export default function Section() {
   const container = useRef();
@@ -10,6 +15,37 @@ export default function Section() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-50%", "30%"]);
   const scale = useTransform(scrollYProgress, [0, 1], ["10%", "30%"]);
+
+  // Background color interpolation from black to white
+  const backgroundColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    ["#0a0a0f", "#0a0a0f", "#f5f5f5", "#f5f5f5"],
+  );
+
+  // Text colors that invert as background changes
+  const textColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    ["#ffffff", "#ffffff", "#0a0a0f", "#0a0a0f"],
+  );
+
+  const subtextColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    ["#9ca3af", "#9ca3af", "#4b5563", "#4b5563"],
+  );
+
+  const labelColor = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.7, 1],
+    [
+      "rgba(255,255,255,0.8)",
+      "rgba(255,255,255,0.8)",
+      "rgba(10,10,15,0.7)",
+      "rgba(10,10,15,0.7)",
+    ],
+  );
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -32,10 +68,13 @@ export default function Section() {
   };
 
   return (
-    <div
+    <motion.div
       ref={container}
-      className="relative flex items-center justify-center min-h-[80vh] overflow-hidden bg-[#0a0a0f]"
-      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
+      className="relative flex items-center justify-center min-h-[80vh] overflow-hidden"
+      style={{
+        backgroundColor,
+        clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
+      }}
     >
       {/* Content */}
       <motion.div
@@ -46,14 +85,18 @@ export default function Section() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <motion.div variants={itemVariants}>
-          <span className="font-['Libre_Baskerville'] text-lg md:text-xl italic text-white/80 tracking-wide">
+          <motion.span
+            className="font-['Libre_Baskerville'] text-lg md:text-xl italic tracking-wide"
+            style={{ color: labelColor }}
+          >
             About Us
-          </span>
+          </motion.span>
         </motion.div>
 
         <motion.h2
           variants={itemVariants}
-          className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal text-white leading-tight mt-6"
+          className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal leading-tight mt-6"
+          style={{ color: textColor }}
         >
           We're{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#c8ff00]">
@@ -63,7 +106,8 @@ export default function Section() {
 
         <motion.p
           variants={itemVariants}
-          className="text-gray-400 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mt-8"
+          className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mt-8"
+          style={{ color: subtextColor }}
         >
           Kay Agency is a full-service digital marketing partner specializing in
           creative content, advertising, influencer campaigns, and brand
@@ -73,7 +117,8 @@ export default function Section() {
 
         <motion.p
           variants={itemVariants}
-          className="text-gray-500 text-base leading-relaxed max-w-2xl mx-auto mt-4"
+          className="text-base leading-relaxed max-w-2xl mx-auto mt-4"
+          style={{ color: subtextColor }}
         >
           Founded with a passion for innovation, we believe in the power of
           storytelling, data-driven strategies, and designs that leave lasting
@@ -87,7 +132,7 @@ export default function Section() {
           style={{ y }}
           className="relative w-full h-full flex items-center justify-center"
         >
-          <motion.video
+          {/* <motion.video
             style={{ scale, backgroundColor: "transparent" }}
             src={swirling}
             autoPlay
@@ -97,9 +142,14 @@ export default function Section() {
             className="absolute min-w-[150%] md:min-w-full min-h-full object-cover opacity-15"
           />
           {/* Gradient overlays */}
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0f] via-transparent to-[#0a0a0f]" />
+          <motion.div
+            className="absolute inset-0"
+            style={{
+              background: useMotionTemplate`linear-gradient(to bottom, ${backgroundColor} 0%, transparent 30%, transparent 70%, ${backgroundColor} 100%)`,
+            }}
+          />
         </motion.div>
       </div>
-    </div>
+    </motion.div>
   );
 }
