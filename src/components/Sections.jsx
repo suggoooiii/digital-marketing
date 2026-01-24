@@ -1,9 +1,4 @@
-import {
-  useScroll,
-  useTransform,
-  motion,
-  useMotionTemplate,
-} from "framer-motion";
+import { useScroll, useTransform, motion } from "framer-motion";
 import { useRef } from "react";
 // import swirling from "/src/assets/swirlingObj.webm";
 
@@ -15,37 +10,6 @@ export default function Section() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-50%", "30%"]);
   const scale = useTransform(scrollYProgress, [0, 1], ["10%", "30%"]);
-
-  // Background color interpolation from black to white (faster transition)
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.5, 1],
-    ["#0a0a0f", "#0a0a0f", "#f5f5f5", "#f5f5f5"],
-  );
-
-  // Text colors that invert as background changes
-  const textColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.5, 1],
-    ["#ffffff", "#ffffff", "#0a0a0f", "#0a0a0f"],
-  );
-
-  const subtextColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.5, 1],
-    ["#9ca3af", "#9ca3af", "#4b5563", "#4b5563"],
-  );
-
-  const labelColor = useTransform(
-    scrollYProgress,
-    [0, 0.2, 0.5, 1],
-    [
-      "rgba(255,255,255,0.8)",
-      "rgba(255,255,255,0.8)",
-      "rgba(10,10,15,0.7)",
-      "rgba(10,10,15,0.7)",
-    ],
-  );
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -68,13 +32,10 @@ export default function Section() {
   };
 
   return (
-    <motion.div
+    <div
       ref={container}
-      className="relative flex items-center justify-center min-h-[80vh] overflow-hidden"
-      style={{
-        backgroundColor,
-        clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)",
-      }}
+      className="relative flex items-center justify-center min-h-[80vh] overflow-hidden bg-[oklch(96.7%_0.001_286.375)]"
+      style={{ clipPath: "polygon(0% 0, 100% 0%, 100% 100%, 0 100%)" }}
     >
       {/* Content */}
       <motion.div
@@ -85,18 +46,14 @@ export default function Section() {
         viewport={{ once: true, margin: "-100px" }}
       >
         <motion.div variants={itemVariants}>
-          <motion.span
-            className="font-['Libre_Baskerville'] text-lg md:text-xl italic tracking-wide"
-            style={{ color: labelColor }}
-          >
+          <span className="font-['Libre_Baskerville'] text-lg md:text-xl italic text-zinc-600 tracking-wide">
             About Us
-          </motion.span>
+          </span>
         </motion.div>
 
         <motion.h2
           variants={itemVariants}
-          className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal leading-tight mt-6"
-          style={{ color: textColor }}
+          className="font-['Gambarino'] text-5xl md:text-6xl lg:text-7xl font-normal text-zinc-900 leading-tight mt-6"
         >
           We're{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#c8ff00]">
@@ -106,8 +63,7 @@ export default function Section() {
 
         <motion.p
           variants={itemVariants}
-          className="text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mt-8"
-          style={{ color: subtextColor }}
+          className="text-zinc-600 text-lg md:text-xl leading-relaxed max-w-3xl mx-auto mt-8"
         >
           Kay Agency is a full-service digital marketing partner specializing in
           creative content, advertising, influencer campaigns, and brand
@@ -117,58 +73,13 @@ export default function Section() {
 
         <motion.p
           variants={itemVariants}
-          className="text-base leading-relaxed max-w-2xl mx-auto mt-4"
-          style={{ color: subtextColor }}
+          className="text-zinc-500 text-base leading-relaxed max-w-2xl mx-auto mt-4"
         >
           Founded with a passion for innovation, we believe in the power of
           storytelling, data-driven strategies, and designs that leave lasting
           impressions.
         </motion.p>
-
-        <motion.div variants={itemVariants} className="mt-10">
-          <button className="group inline-flex items-center gap-3 rounded-full bg-white/5 border border-white/10 px-8 py-4 text-white font-semibold transition-all hover:bg-[#4900f4] hover:border-[#4900f4]">
-            Learn More About Us
-            <svg
-              className="w-5 h-5 transition-transform group-hover:translate-x-1"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M14 5l7 7m0 0l-7 7m7-7H3"
-              />
-            </svg>
-          </button>
-        </motion.div>
       </motion.div>
-
-      {/* Background - Swirling video with parallax */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <motion.div
-          style={{ y }}
-          className="relative w-full h-full flex items-center justify-center"
-        >
-          {/* <motion.video
-            style={{ scale, backgroundColor: "transparent" }}
-            src={swirling}
-            autoPlay
-            loop
-            muted
-            playsInline
-            className="absolute min-w-[150%] md:min-w-full min-h-full object-cover opacity-15"
-          />
-          {/* Gradient overlays */}
-          <motion.div
-            className="absolute inset-0"
-            style={{
-              background: useMotionTemplate`linear-gradient(to bottom, ${backgroundColor} 0%, transparent 30%, transparent 70%, ${backgroundColor} 100%)`,
-            }}
-          />
-        </motion.div>
-      </div>
-    </motion.div>
+    </div>
   );
 }

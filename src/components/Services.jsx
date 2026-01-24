@@ -421,7 +421,7 @@ export default function Services() {
   // Mobile Layout - Vertical stacked cards
   if (isMobile) {
     return (
-      <section className="relative bg-black py-16 px-4">
+      <section className="relative bg-[#0a0a0f] py-16 px-4">
         {/* Header */}
         <div className="mb-8">
           <motion.h2
@@ -461,7 +461,7 @@ export default function Services() {
 
   // Desktop Layout - Horizontal scroll
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-black">
+    <section ref={targetRef} className="relative h-[300vh] bg-[#0a0a0f]">
       <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden">
         {/* Header */}
         <div className="px-8 md:px-16 mb-10">

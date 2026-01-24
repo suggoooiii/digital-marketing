@@ -1,9 +1,4 @@
-import {
-  motion,
-  useScroll,
-  useTransform,
-  useMotionTemplate,
-} from "framer-motion";
+import { motion } from "framer-motion";
 import { useRef } from "react";
 
 // Import all client logos
@@ -47,26 +42,16 @@ const clientLogos2 = [
 
 // ...existing code...
 
-// Marquee Row Component with dynamic gradient colors
-function MarqueeRow({ logos, direction = "left", speed = 30, gradientColor }) {
+// Marquee Row Component
+function MarqueeRow({ logos, direction = "left", speed = 30 }) {
   // Duplicate logos for seamless loop
   const duplicatedLogos = [...logos, ...logos];
-
-  // Create gradient templates using the motion value
-  const leftGradient = useMotionTemplate`linear-gradient(to right, ${gradientColor}, transparent)`;
-  const rightGradient = useMotionTemplate`linear-gradient(to left, ${gradientColor}, transparent)`;
 
   return (
     <div className="relative flex overflow-hidden">
       {/* Gradient masks */}
-      <motion.div
-        className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20"
-        style={{ background: leftGradient }}
-      />
-      <motion.div
-        className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20"
-        style={{ background: rightGradient }}
-      />
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-[#0a0a0f] to-transparent" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-[#0a0a0f] to-transparent" />
 
       <motion.div
         className="flex gap-8 py-4"
@@ -100,53 +85,11 @@ function MarqueeRow({ logos, direction = "left", speed = 30, gradientColor }) {
 
 export default function Clients() {
   const container = useRef();
-  const { scrollYProgress } = useScroll({
-    target: container,
-    offset: ["start end", "end start"],
-  });
-
-  // Continue the color transition from About Us section
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["#f5f5f5", "#f5f5f5", "#0a0a0f"],
-  );
-
-  const textColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["#0a0a0f", "#0a0a0f", "#ffffff"],
-  );
-
-  const subtextColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["#4b5563", "#4b5563", "#9ca3af"],
-  );
-
-  const labelColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["rgba(10,10,15,0.7)", "rgba(10,10,15,0.7)", "rgba(255,255,255,0.8)"],
-  );
-
-  const statTextColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["#0a0a0f", "#0a0a0f", "#ffffff"],
-  );
-
-  const dividerColor = useTransform(
-    scrollYProgress,
-    [0, 0.5, 1],
-    ["rgba(10,10,15,0.1)", "rgba(10,10,15,0.1)", "rgba(255,255,255,0.1)"],
-  );
 
   return (
-    <motion.section
+    <section
       ref={container}
-      className="relative overflow-hidden py-20 -mt-px"
-      style={{ backgroundColor }}
+      className="relative overflow-hidden py-20 -mt-px bg-[#0a0a0f]"
     >
       {/* Header */}
       <motion.div
@@ -156,44 +99,25 @@ export default function Clients() {
         viewport={{ once: true }}
         transition={{ duration: 0.6 }}
       >
-        <motion.span
-          className="mb-4 inline-block font-['Libre_Baskerville'] text-lg md:text-xl italic tracking-wide"
-          style={{ color: labelColor }}
-        >
+        <span className="mb-4 inline-block font-['Libre_Baskerville'] text-lg md:text-xl italic tracking-wide text-white/80">
           Our Clients
-        </motion.span>
-        <motion.h2
-          className="font-['Gambarino'] text-3xl font-bold md:text-4xl lg:text-5xl"
-          style={{ color: textColor }}
-        >
+        </span>
+        <h2 className="font-['Gambarino'] text-3xl font-bold md:text-4xl lg:text-5xl text-white">
           Trusted by{" "}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#7c3aed] to-[#c8ff00]">
             30+ Brands
           </span>
-        </motion.h2>
-        <motion.p
-          className="mx-auto mt-4 max-w-2xl"
-          style={{ color: subtextColor }}
-        >
+        </h2>
+        <p className="mx-auto mt-4 max-w-2xl text-gray-400">
           From startups to established businesses, we've helped brands across
           industries grow their digital presence.
-        </motion.p>
+        </p>
       </motion.div>
 
       {/* Marquee Rows */}
       <div className="space-y-6">
-        <MarqueeRow
-          logos={clientLogos}
-          direction="left"
-          speed={35}
-          gradientColor={backgroundColor}
-        />
-        <MarqueeRow
-          logos={clientLogos2}
-          direction="right"
-          speed={40}
-          gradientColor={backgroundColor}
-        />
+        <MarqueeRow logos={clientLogos} direction="left" speed={35} />
+        <MarqueeRow logos={clientLogos2} direction="right" speed={40} />
       </div>
 
       {/* Bottom Stats - Minimal */}
@@ -205,56 +129,26 @@ export default function Clients() {
         transition={{ duration: 0.6, delay: 0.2 }}
       >
         <div className="text-center">
-          <motion.p
-            className="font-montserrat text-2xl font-bold md:text-4xl"
-            style={{ color: statTextColor }}
-          >
+          <p className="font-montserrat text-2xl font-bold md:text-4xl text-white">
             30+
-          </motion.p>
-          <motion.p
-            className="text-xs md:text-sm"
-            style={{ color: subtextColor }}
-          >
-            Happy Clients
-          </motion.p>
+          </p>
+          <p className="text-xs md:text-sm text-gray-400">Happy Clients</p>
         </div>
-        <motion.div
-          className="h-8 w-px"
-          style={{ backgroundColor: dividerColor }}
-        />
+        <div className="h-8 w-px bg-white/10" />
         <div className="text-center">
-          <motion.p
-            className="font-montserrat text-2xl font-bold md:text-4xl"
-            style={{ color: statTextColor }}
-          >
+          <p className="font-montserrat text-2xl font-bold md:text-4xl text-white">
             150+
-          </motion.p>
-          <motion.p
-            className="text-xs md:text-sm"
-            style={{ color: subtextColor }}
-          >
-            Projects Delivered
-          </motion.p>
+          </p>
+          <p className="text-xs md:text-sm text-gray-400">Projects Delivered</p>
         </div>
-        <motion.div
-          className="h-8 w-px"
-          style={{ backgroundColor: dividerColor }}
-        />
+        <div className="h-8 w-px bg-white/10" />
         <div className="text-center">
-          <motion.p
-            className="font-montserrat text-2xl font-bold md:text-4xl"
-            style={{ color: statTextColor }}
-          >
+          <p className="font-montserrat text-2xl font-bold md:text-4xl text-white">
             5+
-          </motion.p>
-          <motion.p
-            className="text-xs md:text-sm"
-            style={{ color: subtextColor }}
-          >
-            Years Experience
-          </motion.p>
+          </p>
+          <p className="text-xs md:text-sm text-gray-400">Years Experience</p>
         </div>
       </motion.div>
-    </motion.section>
+    </section>
   );
 }
