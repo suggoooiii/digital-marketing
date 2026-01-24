@@ -6,7 +6,7 @@ import path from "path";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/digital-marketing/", // Add this line - your repo name
+  base: "/", // Add this line - your repo name
 
   resolve: {
     alias: {
