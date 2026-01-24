@@ -44,6 +44,7 @@ const CloseIcon = () => (
 export default function Navbar({ onContactOpen }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
+  const [isOverLightSection, setIsOverLightSection] = useState(false);
 
   const navItems = [
     { label: "Home", id: "home" },
@@ -67,11 +68,21 @@ export default function Navbar({ onContactOpen }) {
           const offsetTop = section.element.offsetTop;
           if (scrollPosition >= offsetTop) {
             setActiveSection(section.id);
-            return;
+            break;
           }
         }
       }
-      setActiveSection("home");
+
+      // Check if navbar is over the About Us section (light background)
+      const aboutSection = document.getElementById("about");
+      if (aboutSection) {
+        const aboutTop = aboutSection.offsetTop;
+        const aboutBottom = aboutTop + aboutSection.offsetHeight;
+        const navbarPosition = window.scrollY + 80; // Approximate navbar center
+        setIsOverLightSection(
+          navbarPosition >= aboutTop && navbarPosition < aboutBottom,
+        );
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -90,7 +101,14 @@ export default function Navbar({ onContactOpen }) {
   return (
     <div className="fixed left-0 right-0 top-0 z-50 px-4 py-4 font-['Open_Sans']">
       <div className="mx-auto max-w-5xl">
-        <div className="flex items-center justify-between rounded-full border border-white/5 bg-white/5 px-4 py-2 backdrop-blur-md">
+        <div
+          className={cx(
+            "flex items-center justify-between rounded-full border px-4 py-2 backdrop-blur-md transition-all duration-300",
+            isOverLightSection
+              ? "border-zinc-300/50 bg-zinc-200/80"
+              : "border-white/5 bg-white/5",
+          )}
+        >
           {/* Logo */}
           <button
             onClick={() => scrollToSection("home")}
@@ -100,7 +118,12 @@ export default function Navbar({ onContactOpen }) {
               <img
                 src={logoImg}
                 alt="Kay Agency"
-                className="h-14 w-auto object-contain drop-shadow-[0_0_10px_rgba(73,0,244,0.5)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(73,0,244,0.8)]"
+                className={cx(
+                  "h-14 w-auto object-contain transition-all duration-300",
+                  isOverLightSection
+                    ? "brightness-0 drop-shadow-none group-hover:brightness-0"
+                    : "drop-shadow-[0_0_10px_rgba(73,0,244,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(73,0,244,0.8)]",
+                )}
               />
             </div>
           </button>
@@ -114,8 +137,12 @@ export default function Navbar({ onContactOpen }) {
                 className={cx(
                   "rounded-full px-4 py-2 text-sm font-medium transition-all duration-300",
                   activeSection === item.id
-                    ? "bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                    : "text-gray-400 hover:bg-white/5 hover:text-white",
+                    ? isOverLightSection
+                      ? "bg-zinc-400/30 text-zinc-900 shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                      : "bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                    : isOverLightSection
+                      ? "text-zinc-600 hover:bg-zinc-400/20 hover:text-zinc-900"
+                      : "text-gray-400 hover:bg-white/5 hover:text-white",
                 )}
               >
                 {item.label}
@@ -138,7 +165,12 @@ export default function Navbar({ onContactOpen }) {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="flex h-10 w-10 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-white/5 hover:text-white md:hidden"
+              className={cx(
+                "flex h-10 w-10 items-center justify-center rounded-full transition-colors md:hidden",
+                isOverLightSection
+                  ? "text-zinc-600 hover:bg-zinc-400/20 hover:text-zinc-900"
+                  : "text-gray-400 hover:bg-white/5 hover:text-white",
+              )}
             >
               {mobileMenuOpen ? <CloseIcon /> : <MenuIcon />}
             </button>
@@ -147,7 +179,14 @@ export default function Navbar({ onContactOpen }) {
 
         {/* Mobile Menu Dropdown */}
         {mobileMenuOpen && (
-          <div className="mt-2 rounded-2xl border border-white/10 bg-[#0a0a0f]/95 p-2 backdrop-blur-xl md:hidden">
+          <div
+            className={cx(
+              "mt-2 rounded-2xl border p-2 backdrop-blur-xl md:hidden",
+              isOverLightSection
+                ? "border-zinc-300/50 bg-zinc-200/95"
+                : "border-white/10 bg-[#0a0a0f]/95",
+            )}
+          >
             {navItems.map((item) => (
               <button
                 key={item.id}
@@ -155,8 +194,12 @@ export default function Navbar({ onContactOpen }) {
                 className={cx(
                   "w-full rounded-xl px-4 py-3 text-left text-sm font-medium transition-all duration-300",
                   activeSection === item.id
-                    ? "bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]"
-                    : "text-gray-400 hover:bg-white/5 hover:text-white",
+                    ? isOverLightSection
+                      ? "bg-zinc-400/30 text-zinc-900 shadow-[0_0_10px_rgba(0,0,0,0.1)]"
+                      : "bg-white/10 text-white shadow-[0_0_10px_rgba(255,255,255,0.1)]"
+                    : isOverLightSection
+                      ? "text-zinc-600 hover:bg-zinc-400/20 hover:text-zinc-900"
+                      : "text-gray-400 hover:bg-white/5 hover:text-white",
                 )}
               >
                 {item.label}

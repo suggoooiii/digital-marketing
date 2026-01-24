@@ -144,27 +144,27 @@ function FooterNav({ onContactOpen }) {
 
   return (
     <motion.div
-      className="footer-animate flex flex-row justify-between gap-4 md:flex-row md:justify-between md:gap-20"
+      className="footer-animate flex flex-row justify-between gap-6 md:gap-20"
       initial={{ y: 30, opacity: 0 }}
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5, staggerChildren: 0.1 }}
     >
       {/* Contact Info */}
-      <div className="flex flex-col gap-4 md:gap-6 font-['Open_Sans']">
-        <h3 className="text-sm uppercase tracking-wider text-white/50">
+      <div className="flex flex-col gap-3 md:gap-6 font-['Open_Sans']">
+        <h3 className="text-xs md:text-sm uppercase tracking-wider text-white/50">
           Get in Touch
         </h3>
 
         {/* Phone */}
         <motion.a
           href="tel:+971544999960"
-          className="group flex items-center gap-4 text-white transition-colors hover:text-[#4900f4]"
+          className="group flex items-center gap-2 md:gap-4 text-white transition-colors hover:text-[#4900f4]"
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+          <div className="flex h-6 w-6 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20 flex-shrink-0">
             <svg
-              className="h-5 w-5 md:h-7 md:w-7"
+              className="h-3 w-3 md:h-7 md:w-7"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -177,7 +177,7 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-base md:text-xl">
+          <span className="font-['Outfit'] text-xs md:text-xl">
             +971 54 499 9960
           </span>
         </motion.a>
@@ -185,13 +185,13 @@ function FooterNav({ onContactOpen }) {
         {/* Email */}
         <motion.a
           href="mailto:info@kay-uae.com"
-          className="group flex items-center gap-4 text-white transition-colors hover:text-[#4900f4]"
+          className="group flex items-center gap-2 md:gap-4 text-white transition-colors hover:text-[#4900f4]"
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20">
+          <div className="flex h-6 w-6 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5 transition-colors group-hover:bg-[#4900f4]/20 flex-shrink-0">
             <svg
-              className="h-5 w-5 md:h-7 md:w-7"
+              className="h-3 w-3 md:h-7 md:w-7"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -204,20 +204,20 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-base md:text-xl">
+          <span className="font-['Outfit'] text-xs md:text-xl">
             info@kay-uae.com
           </span>
         </motion.a>
 
         {/* Location */}
         <motion.div
-          className="group flex items-center gap-4 text-white"
+          className="group flex items-center gap-2 md:gap-4 text-white"
           whileHover={{ x: 5 }}
           transition={{ type: "spring", stiffness: 300 }}
         >
-          <div className="flex h-10 w-10 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5">
+          <div className="flex h-6 w-6 md:h-14 md:w-14 items-center justify-center rounded-full bg-white/5 flex-shrink-0">
             <svg
-              className="h-5 w-5 md:h-7 md:w-7"
+              className="h-3 w-3 md:h-7 md:w-7"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -236,22 +236,22 @@ function FooterNav({ onContactOpen }) {
               />
             </svg>
           </div>
-          <span className="font-['Outfit'] text-base md:text-xl">
+          <span className="font-['Outfit'] text-xs md:text-xl">
             Abu Dhabi - Al Ain
           </span>
         </motion.div>
       </div>
 
       {/* Quick Links */}
-      <div className="flex flex-col gap-3 md:ml-auto md:mr-32">
-        <h3 className="mb-2 text-sm uppercase tracking-wider text-white/50">
+      <div className="flex flex-col gap-2 md:gap-3 md:ml-auto md:mr-32">
+        <h3 className="mb-1 md:mb-2 text-xs md:text-sm uppercase tracking-wider text-white/50">
           Quick Links
         </h3>
         {quickLinks.map((link) => (
           <motion.button
             key={link.label}
             onClick={link.action}
-            className="cursor-pointer text-left text-base md:text-xl text-white transition-colors hover:text-[#4900f4]"
+            className="cursor-pointer text-left text-xs md:text-xl text-white transition-colors hover:text-[#4900f4]"
             whileHover={{ x: 5 }}
             transition={{ type: "spring", stiffness: 300 }}
           >
@@ -271,17 +271,17 @@ function FooterHero() {
       whileInView={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.2 }}
     >
-      <div className="flex items-center gap-4 md:gap-6">
+      <div className="flex items-center gap-1 md:gap-6">
         <motion.img
           src={logobig}
           alt="Kay Agency Logo"
-          className="h-14 w-14 object-contain md:h-20 md:w-20 lg:h-24 lg:w-24"
+          className="h-10 w-10 object-contain md:h-20 md:w-20 lg:h-24 lg:w-24"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.6, delay: 0.3 }}
         />
         <motion.h1
-          className="mt-10 font-['Gambarino'] text-[10vw] font-normal leading-[0.8] tracking-tight text-white"
+          className="mt-6 md:mt-10 font-['Gambarino'] text-[10vw] md:text-[10vw] font-normal leading-[0.8] tracking-tight text-white"
           initial={{ scale: 0.9 }}
           whileInView={{ scale: 1 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
@@ -289,7 +289,9 @@ function FooterHero() {
           Kay Agency
         </motion.h1>
       </div>
-      <p className="text-white/60">©copyright</p>
+      <p className="text-white/60 text-[12px] md:text-base whitespace-nowrap">
+        ©copyright
+      </p>
     </motion.div>
   );
 }
