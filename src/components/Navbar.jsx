@@ -44,7 +44,6 @@ const CloseIcon = () => (
 export default function Navbar({ onContactOpen }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [isOverWhiteSection, setIsOverWhiteSection] = useState(false);
 
   const navItems = [
     { label: "Home", id: "home" },
@@ -68,20 +67,11 @@ export default function Navbar({ onContactOpen }) {
           const offsetTop = section.element.offsetTop;
           if (scrollPosition >= offsetTop) {
             setActiveSection(section.id);
-            break;
+            return;
           }
         }
       }
-
-      // Check if we're past the Services section
-      // Logo stays inverted (black) for About Us, Clients, and Footer
-      const servicesSection = document.getElementById("services");
-      if (servicesSection) {
-        const servicesBottom =
-          servicesSection.offsetTop + servicesSection.offsetHeight;
-        // Logo is inverted (black) once we pass the Services section and stays that way
-        setIsOverWhiteSection(scrollPosition >= servicesBottom);
-      }
+      setActiveSection("home");
     };
 
     window.addEventListener("scroll", handleScroll);
@@ -110,12 +100,7 @@ export default function Navbar({ onContactOpen }) {
               <img
                 src={logoImg}
                 alt="Kay Agency"
-                className={cx(
-                  "h-14 w-auto object-contain transition-all duration-500",
-                  isOverWhiteSection
-                    ? "invert drop-shadow-[0_0_10px_rgba(0,0,0,0.3)] group-hover:drop-shadow-[0_0_20px_rgba(0,0,0,0.5)]"
-                    : "drop-shadow-[0_0_10px_rgba(73,0,244,0.5)] group-hover:drop-shadow-[0_0_20px_rgba(73,0,244,0.8)]",
-                )}
+                className="h-14 w-auto object-contain drop-shadow-[0_0_10px_rgba(73,0,244,0.5)] transition-all duration-300 group-hover:drop-shadow-[0_0_20px_rgba(73,0,244,0.8)]"
               />
             </div>
           </button>

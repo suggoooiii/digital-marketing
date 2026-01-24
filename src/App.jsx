@@ -187,11 +187,7 @@ export default function App() {
         <Section />
       </div>
       <Clients />
-      <StickyFooter
-        height={700}
-        backgroundColor="#681881"
-        onContactOpen={() => setIsContactOpen(true)}
-      />
+      <StickyFooter height={600} onContactOpen={() => setIsContactOpen(true)} />
     </main>
   );
 }
