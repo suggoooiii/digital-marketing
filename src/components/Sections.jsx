@@ -16,29 +16,29 @@ export default function Section() {
   const y = useTransform(scrollYProgress, [0, 1], ["-50%", "30%"]);
   const scale = useTransform(scrollYProgress, [0, 1], ["10%", "30%"]);
 
-  // Background color interpolation from black to white
+  // Background color interpolation from black to white (faster transition)
   const backgroundColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.2, 0.5, 1],
     ["#0a0a0f", "#0a0a0f", "#f5f5f5", "#f5f5f5"],
   );
 
   // Text colors that invert as background changes
   const textColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.2, 0.5, 1],
     ["#ffffff", "#ffffff", "#0a0a0f", "#0a0a0f"],
   );
 
   const subtextColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.2, 0.5, 1],
     ["#9ca3af", "#9ca3af", "#4b5563", "#4b5563"],
   );
 
   const labelColor = useTransform(
     scrollYProgress,
-    [0, 0.3, 0.7, 1],
+    [0, 0.2, 0.5, 1],
     [
       "rgba(255,255,255,0.8)",
       "rgba(255,255,255,0.8)",

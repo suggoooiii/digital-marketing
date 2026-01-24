@@ -1,4 +1,9 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import {
+  motion,
+  useScroll,
+  useTransform,
+  useMotionTemplate,
+} from "framer-motion";
 import { useRef } from "react";
 
 // Import all client logos
@@ -43,29 +48,24 @@ const clientLogos2 = [
 // ...existing code...
 
 // Marquee Row Component with dynamic gradient colors
-function MarqueeRow({
-  logos,
-  direction = "left",
-  speed = 30,
-  gradientColor = "#0a0a0f",
-}) {
+function MarqueeRow({ logos, direction = "left", speed = 30, gradientColor }) {
   // Duplicate logos for seamless loop
   const duplicatedLogos = [...logos, ...logos];
+
+  // Create gradient templates using the motion value
+  const leftGradient = useMotionTemplate`linear-gradient(to right, ${gradientColor}, transparent)`;
+  const rightGradient = useMotionTemplate`linear-gradient(to left, ${gradientColor}, transparent)`;
 
   return (
     <div className="relative flex overflow-hidden">
       {/* Gradient masks */}
       <motion.div
         className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20"
-        style={{
-          background: `linear-gradient(to right, ${gradientColor}, transparent)`,
-        }}
+        style={{ background: leftGradient }}
       />
       <motion.div
         className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20"
-        style={{
-          background: `linear-gradient(to left, ${gradientColor}, transparent)`,
-        }}
+        style={{ background: rightGradient }}
       />
 
       <motion.div
@@ -145,7 +145,7 @@ export default function Clients() {
   return (
     <motion.section
       ref={container}
-      className="relative overflow-hidden py-20"
+      className="relative overflow-hidden py-20 -mt-px"
       style={{ backgroundColor }}
     >
       {/* Header */}
@@ -182,8 +182,18 @@ export default function Clients() {
 
       {/* Marquee Rows */}
       <div className="space-y-6">
-        <MarqueeRow logos={clientLogos} direction="left" speed={35} />
-        <MarqueeRow logos={clientLogos2} direction="right" speed={40} />
+        <MarqueeRow
+          logos={clientLogos}
+          direction="left"
+          speed={35}
+          gradientColor={backgroundColor}
+        />
+        <MarqueeRow
+          logos={clientLogos2}
+          direction="right"
+          speed={40}
+          gradientColor={backgroundColor}
+        />
       </div>
 
       {/* Bottom Stats - Minimal */}
