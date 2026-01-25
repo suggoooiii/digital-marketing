@@ -75,6 +75,25 @@ const services = [
   "Event Management & Activation",
 ];
 
+const countryCodes = [
+  { code: "+971", country: "UAE", flag: "🇦🇪" },
+  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦" },
+  { code: "+974", country: "Qatar", flag: "🇶🇦" },
+  { code: "+973", country: "Bahrain", flag: "🇧🇭" },
+  { code: "+968", country: "Oman", flag: "🇴🇲" },
+  { code: "+965", country: "Kuwait", flag: "🇰🇼" },
+  { code: "+962", country: "Jordan", flag: "🇯🇴" },
+  { code: "+961", country: "Lebanon", flag: "🇱🇧" },
+  { code: "+20", country: "Egypt", flag: "🇪🇬" },
+  { code: "+91", country: "India", flag: "🇮🇳" },
+  { code: "+92", country: "Pakistan", flag: "🇵🇰" },
+  { code: "+63", country: "Philippines", flag: "🇵🇭" },
+  { code: "+1", country: "USA/Canada", flag: "🇺🇸" },
+  { code: "+44", country: "UK", flag: "🇬🇧" },
+  { code: "+49", country: "Germany", flag: "🇩🇪" },
+  { code: "+33", country: "France", flag: "🇫🇷" },
+];
+
 const backdropVariants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1 },
@@ -119,6 +138,8 @@ export default function ContactModal({ isOpen, onClose }) {
   const formRef = useRef();
   const [formData, setFormData] = useState({
     name: "",
+    countryCode: "+971",
+    phone: "",
     email: "",
     company: "",
     service: "",
@@ -136,6 +157,20 @@ export default function ContactModal({ isOpen, onClose }) {
     e.preventDefault();
     setIsSubmitting(true);
     setError("");
+
+    // Validate name is provided
+    if (!formData.name.trim()) {
+      setError("Name is required.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Validate phone number is provided
+    if (!formData.phone.trim()) {
+      setError("Phone number is required.");
+      setIsSubmitting(false);
+      return;
+    }
 
     try {
       // EmailJS configuration - Replace these with your actual values
@@ -156,6 +191,8 @@ export default function ContactModal({ isOpen, onClose }) {
         setIsSuccess(false);
         setFormData({
           name: "",
+          countryCode: "+971",
+          phone: "",
           email: "",
           company: "",
           service: "",
@@ -273,49 +310,81 @@ export default function ContactModal({ isOpen, onClose }) {
                     {error && <p className="text-sm text-red-400">{error}</p>}
                   </motion.div>
 
-                  {/* Name & Email Row */}
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <motion.div variants={itemVariants}>
-                      <label className="mb-1.5 block text-sm font-medium text-gray-300">
-                        Name
-                      </label>
-                      <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        required
-                        placeholder="John Doe"
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
-                      />
-                    </motion.div>
-                    <motion.div variants={itemVariants}>
-                      <label className="mb-1.5 block text-sm font-medium text-gray-300">
-                        Email
-                      </label>
-                      <input
-                        type="email"
-                        name="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                        placeholder="john@company.com"
-                        className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
-                      />
-                    </motion.div>
-                  </div>
-
-                  {/* Company */}
+                  {/* Name */}
                   <motion.div variants={itemVariants}>
                     <label className="mb-1.5 block text-sm font-medium text-gray-300">
-                      Company <span className="text-gray-500">(optional)</span>
+                      Name <span className="text-red-400">*</span>
                     </label>
                     <input
                       type="text"
-                      name="company"
-                      value={formData.company}
+                      name="name"
+                      value={formData.name}
                       onChange={handleChange}
-                      placeholder="Acme Inc."
+                      required
+                      placeholder="John Doe"
+                      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
+                    />
+                  </motion.div>
+
+                  {/* Phone Number with Country Code */}
+                  <motion.div variants={itemVariants}>
+                    <label className="mb-1.5 block text-sm font-medium text-gray-300">
+                      Phone Number <span className="text-red-400">*</span>
+                    </label>
+                    <div className="flex gap-2">
+                      {/* Country Code Selector */}
+                      <select
+                        name="countryCode"
+                        value={formData.countryCode}
+                        onChange={handleChange}
+                        className="w-28 shrink-0 cursor-pointer appearance-none rounded-xl border border-white/10 bg-white/5 px-3 py-3 text-white outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
+                        style={{
+                          backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%239ca3af'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E")`,
+                          backgroundRepeat: "no-repeat",
+                          backgroundPosition: "right 8px center",
+                          backgroundSize: "16px",
+                        }}
+                      >
+                        {countryCodes.map((country) => (
+                          <option
+                            key={country.code}
+                            value={country.code}
+                            className="bg-[#0a0a0f]"
+                          >
+                            {country.flag} {country.code}
+                          </option>
+                        ))}
+                      </select>
+                      {/* Phone Input */}
+                      <input
+                        type="tel"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleChange}
+                        required
+                        placeholder="54 499 9960"
+                        className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
+                      />
+                      {/* Hidden field to send full phone number to EmailJS */}
+                      <input
+                        type="hidden"
+                        name="fullPhone"
+                        value={`${formData.countryCode} ${formData.phone}`}
+                      />
+                    </div>
+                  </motion.div>
+
+                  {/* Email (optional) */}
+                  <motion.div variants={itemVariants}>
+                    <label className="mb-1.5 block text-sm font-medium text-gray-300">
+                      Email <span className="text-gray-500">(optional)</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={formData.email}
+                      onChange={handleChange}
+                      placeholder="john@company.com"
                       className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder-gray-500 outline-none transition-all focus:border-[#4900f4] focus:ring-2 focus:ring-[#4900f4]/20"
                     />
                   </motion.div>
