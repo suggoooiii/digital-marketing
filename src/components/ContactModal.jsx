@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
+import { isValidPhoneNumber, parsePhoneNumber } from "libphonenumber-js";
 
 const XIcon = () => (
   <svg
@@ -76,22 +77,22 @@ const services = [
 ];
 
 const countryCodes = [
-  { code: "+971", country: "UAE", flag: "🇦🇪" },
-  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦" },
-  { code: "+974", country: "Qatar", flag: "🇶🇦" },
-  { code: "+973", country: "Bahrain", flag: "🇧🇭" },
-  { code: "+968", country: "Oman", flag: "🇴🇲" },
-  { code: "+965", country: "Kuwait", flag: "🇰🇼" },
-  { code: "+962", country: "Jordan", flag: "🇯🇴" },
-  { code: "+961", country: "Lebanon", flag: "🇱🇧" },
-  { code: "+20", country: "Egypt", flag: "🇪🇬" },
-  { code: "+91", country: "India", flag: "🇮🇳" },
-  { code: "+92", country: "Pakistan", flag: "🇵🇰" },
-  { code: "+63", country: "Philippines", flag: "🇵🇭" },
-  { code: "+1", country: "USA/Canada", flag: "🇺🇸" },
-  { code: "+44", country: "UK", flag: "🇬🇧" },
-  { code: "+49", country: "Germany", flag: "🇩🇪" },
-  { code: "+33", country: "France", flag: "🇫🇷" },
+  { code: "+971", country: "UAE", flag: "🇦🇪", iso: "AE" },
+  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦", iso: "SA" },
+  { code: "+974", country: "Qatar", flag: "🇶🇦", iso: "QA" },
+  { code: "+973", country: "Bahrain", flag: "🇧🇭", iso: "BH" },
+  { code: "+968", country: "Oman", flag: "🇴🇲", iso: "OM" },
+  { code: "+965", country: "Kuwait", flag: "🇰🇼", iso: "KW" },
+  { code: "+962", country: "Jordan", flag: "🇯🇴", iso: "JO" },
+  { code: "+961", country: "Lebanon", flag: "🇱🇧", iso: "LB" },
+  { code: "+20", country: "Egypt", flag: "🇪🇬", iso: "EG" },
+  { code: "+91", country: "India", flag: "🇮🇳", iso: "IN" },
+  { code: "+92", country: "Pakistan", flag: "🇵🇰", iso: "PK" },
+  { code: "+63", country: "Philippines", flag: "🇵🇭", iso: "PH" },
+  { code: "+1", country: "USA/Canada", flag: "🇺🇸", iso: "US" },
+  { code: "+44", country: "UK", flag: "🇬🇧", iso: "GB" },
+  { code: "+49", country: "Germany", flag: "🇩🇪", iso: "DE" },
+  { code: "+33", country: "France", flag: "🇫🇷", iso: "FR" },
 ];
 
 const backdropVariants = {
@@ -149,6 +150,34 @@ export default function ContactModal({ isOpen, onClose }) {
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState("");
 
+  // Phone validation using libphonenumber-js
+  const validatePhone = (phone, countryCode) => {
+    // Find the country ISO code
+    const countryInfo = countryCodes.find((c) => c.code === countryCode);
+    const isoCode = countryInfo?.iso || "AE";
+    const countryName = countryInfo?.country || "selected country";
+
+    // Combine country code with phone number
+    const fullNumber = `${countryCode}${phone.replace(/\D/g, "")}`;
+
+    try {
+      // Use isValidPhoneNumber for comprehensive validation
+      if (!isValidPhoneNumber(fullNumber)) {
+        return `Please enter a valid phone number for ${countryName}`;
+      }
+
+      // Parse the number to get more details if needed
+      const parsedNumber = parsePhoneNumber(fullNumber);
+      if (!parsedNumber || !parsedNumber.isValid()) {
+        return `Please enter a valid phone number for ${countryName}`;
+      }
+
+      return null; // Valid
+    } catch (err) {
+      return `Please enter a valid phone number for ${countryName}`;
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
@@ -168,6 +197,14 @@ export default function ContactModal({ isOpen, onClose }) {
     // Validate phone number is provided
     if (!formData.phone.trim()) {
       setError("Phone number is required.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    // Validate phone number format
+    const phoneError = validatePhone(formData.phone, formData.countryCode);
+    if (phoneError) {
+      setError(phoneError);
       setIsSubmitting(false);
       return;
     }
